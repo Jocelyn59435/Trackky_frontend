@@ -1,0 +1,6 @@
+mutation signIn($input: SignInPayload!) {
+  signIn(input: $input) {
+    email
+    token
+  }
+}

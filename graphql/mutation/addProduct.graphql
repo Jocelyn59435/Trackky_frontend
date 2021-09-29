@@ -1,0 +1,5 @@
+mutation addProduct($input: AddProductPayload!){
+    addProduct(input: $input){
+        Product!
+    }
+}

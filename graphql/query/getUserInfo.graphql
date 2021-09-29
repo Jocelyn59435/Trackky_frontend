@@ -1,0 +1,6 @@
+query getUserInfo($email: String!) {
+  getUserInfo(email: $email) {
+    id
+    created_at
+  }
+}

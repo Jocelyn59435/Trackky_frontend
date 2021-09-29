@@ -1,12 +1,12 @@
 overwrite: true
-schema: 'https://trackkybackend.herokuapp.com/graphql'
-# schema: "http://localhost:4000/graphql"
+# schema: 'https://trackkybackend.herokuapp.com/graphql'
+schema: 'http://localhost:4000/graphql'
 documents: 'graphql/**/*.graphql'
 generates:
   ./graphql/generated.ts:
     plugins:
       - add:
           content: '// This is a generated file, use `npm run generate` to regenerate'
-      - "typescript"
-      - "typescript-react-apollo"
-      - "typescript-operations"
+      - 'typescript'
+      - 'typescript-react-apollo'
+      - 'typescript-operations'
