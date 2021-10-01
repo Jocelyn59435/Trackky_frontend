@@ -6,7 +6,7 @@ import { useAuth } from '../../../lib/useAuth';
 export default function LandingPage() {
   const { token } = useAuth();
   if (token) {
-    return <Header notSignedIn={true} />;
+    return <Header notSignedIn={false} />;
   } else {
     return (
       <>

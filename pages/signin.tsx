@@ -100,13 +100,13 @@ export default function signInComponent() {
           <hr className='border-0 bg-gray-300 text-gray-500 h-px my-10' />
           <span>New to Trackky?</span>{' '}
           <Link href='/signup'>
-            <a className='hover:underline'>Sign up</a>
+            <a className='font-bold hover:underline'>Sign up</a>
           </Link>
         </div>
         <div className='text-center mt-5'>
           <span>Forget your password?</span>{' '}
           <Link href='/resetpasswordrequest'>
-            <a className='hover:underline'>Reset here</a>
+            <a className='font-bold hover:underline'>Reset here</a>
           </Link>
         </div>
       </div>
