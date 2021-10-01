@@ -25,13 +25,20 @@ export default function ResetPasswordPage() {
   const router = useRouter();
   const { securecode } = router.query;
 
-  const { data, loading, error } = useCheckSecureCodeQuery({
+  const {
+    data: queryData,
+    loading: queryLoading,
+    error: queryError,
+  } = useCheckSecureCodeQuery({
     variables: {
       reset_password_secure_code: securecode as string,
     },
   });
 
-  const [resetPasswordMutation] = useResetPasswordMutation();
+  const [
+    resetPasswordMutation,
+    { data: resetData, loading: resetLoading, error: resetError },
+  ] = useResetPasswordMutation();
 
   const password = useRef({}); // initialize a blank object
   // update current value when password field changes
@@ -50,7 +57,6 @@ export default function ResetPasswordPage() {
       if (result.errors) {
         throw new Error('Cannot reset password' + result.errors);
       }
-      setShowResetError('0');
     } catch (e) {
       setShowResetError(e.message);
     }
@@ -65,10 +71,10 @@ export default function ResetPasswordPage() {
           Reset Password
         </span>
       </div>
-      {!data?.checkSecureCode?.isValidCode && (
-        <p className='text-red'>{error?.message}</p>
+      {!queryData?.checkSecureCode?.isValidCode && (
+        <p className='text-red'>{queryError?.message}</p>
       )}
-      {data?.checkSecureCode?.isValidCode && (
+      {queryData?.checkSecureCode?.isValidCode && (
         <div className='mx-auto lg:w-2/3 md:w-5/6 sm:w-11/12 p-4 '>
           <form onSubmit={handleSubmit(onSubmit)} className='space-y-4'>
             <div>
@@ -115,12 +121,11 @@ export default function ResetPasswordPage() {
                 className='w-full h-10 rounded-md bg-indigo-400 text-grey hover:bg-indigo disabled:opacity-50 text-lg font-bold'
               />
             </motion.div>
-            {showResetError !== '' && showResetError !== '0' && (
-              <p className='text-red'>{showResetError}</p>
-            )}
-            {showResetError === '0' && (
+            {resetError && <p className='text-red'>{showResetError}</p>}
+            {resetData?.resetPassword?.email && (
               <p>
-                Congrats! Your password has been reset successfully.
+                {`Congrats! Your password for ${resetData?.resetPassword?.email}
+                has been reset successfully.`}
                 <Link href='/signin'>
                   <a className='ml-2 font-bold hover:underline'>sign in here</a>
                 </Link>

@@ -31,11 +31,11 @@ export default function LandingPage() {
   } else {
     return (
       <>
-        <Header notSignedIn={false} />
+        <Header notSignedIn={true} />
         <span>
-          You are not authorized, please
+          You are not authorized, please&nbsp;
           <Link href='/signin'>
-            <a className='hover:underline'>sign in</a>
+            <a className='font-bold hover:underline'>sign in&nbsp;</a>
           </Link>
           first.
         </span>
