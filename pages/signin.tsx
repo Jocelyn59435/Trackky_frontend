@@ -4,7 +4,7 @@ import { useSignInMutation } from '../graphql/generated';
 import { motion } from 'framer-motion';
 import Link from 'next/link';
 import { useAuth } from '../utils/useAuth';
-import Header from '../components/Header';
+import Header from '../src/components/Header';
 
 type SignInFormData = {
   email: string;

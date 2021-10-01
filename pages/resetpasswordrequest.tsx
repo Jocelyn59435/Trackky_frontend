@@ -1,9 +1,8 @@
 import React, { useState } from 'react';
 import { useForm, SubmitHandler } from 'react-hook-form';
 import { motion } from 'framer-motion';
-import Header from '../components/Header';
+import Header from '../src/components/Header';
 import { useResetPasswordRequestMutation } from '../graphql/generated';
-import { resultKeyNameFromField } from '@apollo/client/utilities';
 
 type ResetPasswordRequestFormData = {
   email: string;

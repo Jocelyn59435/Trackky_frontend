@@ -1,6 +1,6 @@
 import React from 'react';
 import Link from 'next/link';
-import Header from '../../../components/Header';
+import Header from '../../../src/components/Header';
 import { useAuth } from '../../../utils/useAuth';
 
 export default function LandingPage() {

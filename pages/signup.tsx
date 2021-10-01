@@ -3,7 +3,7 @@ import { useForm, SubmitHandler } from 'react-hook-form';
 import { useSignUpMutation } from '../graphql/generated';
 import { useAuth } from '../utils/useAuth';
 import { motion } from 'framer-motion';
-import Header from '../components/Header';
+import Header from '../src/components/Header';
 
 type SignUpFormData = {
   first_name: string;
