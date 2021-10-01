@@ -4,11 +4,18 @@ import { useRouter } from 'next/router';
 import Header from '../../../src/components/Header';
 import { useAuth } from '../../../lib/useAuth';
 import jwtDecode from 'jwt-decode';
+import { useCheckProductPriceByUrlQuery } from '../../../graphql/generated';
 
 export default function LandingPage() {
   const router = useRouter();
   const { userid } = router.query;
   const { token, setToken } = useAuth();
+
+  const { data, loading, error } = useCheckProductPriceByUrlQuery({
+    variables: {
+      url: 'https://www.chemistwarehouse.com.au/buy/94824/healthy-way-great-goji-berries-200g',
+    },
+  });
   let sameRoute = false;
   if (token) {
     try {
@@ -27,11 +34,19 @@ export default function LandingPage() {
     }
   }
   if (token && sameRoute) {
-    return <Header notSignedIn={false} />;
+    return (
+      <>
+        <Header notSignedIn={false} />
+        <div>
+          <input type='search' placeholder='Please enter your product URL' />
+        </div>
+      </>
+    );
   } else {
     return (
       <>
         <Header notSignedIn={true} />
+        {<p>data?.checkProductPriceByUrl?.original_price</p>}
         <span>
           You are not authorized, please&nbsp;
           <Link href='/signin'>

@@ -31,6 +31,14 @@ export type AuthResponse = {
   token: Scalars['String'];
 };
 
+export type CheckProductPriceResponse = {
+  __typename?: 'CheckProductPriceResponse';
+  original_price: Scalars['Float'];
+  product_image_src: Scalars['String'];
+  product_link: Scalars['String'];
+  product_name: Scalars['String'];
+};
+
 export type CheckSecureCodeResponse = {
   __typename?: 'CheckSecureCodeResponse';
   email: Scalars['String'];
@@ -85,12 +93,13 @@ export type Product = {
   created_at: Scalars['DateTime'];
   current_price: Scalars['Float'];
   desired_price: Scalars['Float'];
-  email_sent_time: Scalars['DateTime'];
+  email_sent_time: Scalars['Float'];
   id: Scalars['ID'];
   original_price: Scalars['Float'];
   platform: Scalars['String'];
-  price_update_time: Scalars['DateTime'];
+  price_update_time: Scalars['Float'];
   product_image_src: Scalars['String'];
+  product_link: Scalars['String'];
   product_name: Scalars['String'];
   status: ProductStatus;
   updated_at: Scalars['DateTime'];
@@ -99,9 +108,15 @@ export type Product = {
 
 export type Query = {
   __typename?: 'Query';
+  checkProductPriceByUrl: CheckProductPriceResponse;
   checkSecureCode: CheckSecureCodeResponse;
-  getProductById: Product;
+  getProductByUserId: Array<Product>;
   getUserInfo: User_Info;
+};
+
+
+export type QueryCheckProductPriceByUrlArgs = {
+  url: Scalars['String'];
 };
 
 
@@ -110,8 +125,8 @@ export type QueryCheckSecureCodeArgs = {
 };
 
 
-export type QueryGetProductByIdArgs = {
-  id: Scalars['String'];
+export type QueryGetProductByUserIdArgs = {
+  userId: Scalars['Float'];
 };
 
 
@@ -298,6 +313,44 @@ export function useSignUpMutation(baseOptions?: Apollo.MutationHookOptions<SignU
 export type SignUpMutationHookResult = ReturnType<typeof useSignUpMutation>;
 export type SignUpMutationResult = Apollo.MutationResult<SignUpMutation>;
 export type SignUpMutationOptions = Apollo.BaseMutationOptions<SignUpMutation, SignUpMutationVariables>;
+export const CheckProductPriceByUrlDocument = gql`
+    query checkProductPriceByUrl($url: String!) {
+  checkProductPriceByUrl(url: $url) {
+    product_name
+    product_link
+    product_image_src
+    original_price
+  }
+}
+    `;
+
+/**
+ * __useCheckProductPriceByUrlQuery__
+ *
+ * To run a query within a React component, call `useCheckProductPriceByUrlQuery` and pass it any options that fit your needs.
+ * When your component renders, `useCheckProductPriceByUrlQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useCheckProductPriceByUrlQuery({
+ *   variables: {
+ *      url: // value for 'url'
+ *   },
+ * });
+ */
+export function useCheckProductPriceByUrlQuery(baseOptions: Apollo.QueryHookOptions<CheckProductPriceByUrlQuery, CheckProductPriceByUrlQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<CheckProductPriceByUrlQuery, CheckProductPriceByUrlQueryVariables>(CheckProductPriceByUrlDocument, options);
+      }
+export function useCheckProductPriceByUrlLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<CheckProductPriceByUrlQuery, CheckProductPriceByUrlQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<CheckProductPriceByUrlQuery, CheckProductPriceByUrlQueryVariables>(CheckProductPriceByUrlDocument, options);
+        }
+export type CheckProductPriceByUrlQueryHookResult = ReturnType<typeof useCheckProductPriceByUrlQuery>;
+export type CheckProductPriceByUrlLazyQueryHookResult = ReturnType<typeof useCheckProductPriceByUrlLazyQuery>;
+export type CheckProductPriceByUrlQueryResult = Apollo.QueryResult<CheckProductPriceByUrlQuery, CheckProductPriceByUrlQueryVariables>;
 export const CheckSecureCodeDocument = gql`
     query checkSecureCode($reset_password_secure_code: String!) {
   checkSecureCode(reset_password_secure_code: $reset_password_secure_code) {
@@ -334,6 +387,50 @@ export function useCheckSecureCodeLazyQuery(baseOptions?: Apollo.LazyQueryHookOp
 export type CheckSecureCodeQueryHookResult = ReturnType<typeof useCheckSecureCodeQuery>;
 export type CheckSecureCodeLazyQueryHookResult = ReturnType<typeof useCheckSecureCodeLazyQuery>;
 export type CheckSecureCodeQueryResult = Apollo.QueryResult<CheckSecureCodeQuery, CheckSecureCodeQueryVariables>;
+export const GetProductByUserIdDocument = gql`
+    query getProductByUserId($userId: Float!) {
+  getProductByUserId(userId: $userId) {
+    product_name
+    product_link
+    product_image_src
+    original_price
+    current_price
+    desired_price
+    price_update_time
+    email_sent_time
+    status
+    user_id
+  }
+}
+    `;
+
+/**
+ * __useGetProductByUserIdQuery__
+ *
+ * To run a query within a React component, call `useGetProductByUserIdQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetProductByUserIdQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetProductByUserIdQuery({
+ *   variables: {
+ *      userId: // value for 'userId'
+ *   },
+ * });
+ */
+export function useGetProductByUserIdQuery(baseOptions: Apollo.QueryHookOptions<GetProductByUserIdQuery, GetProductByUserIdQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetProductByUserIdQuery, GetProductByUserIdQueryVariables>(GetProductByUserIdDocument, options);
+      }
+export function useGetProductByUserIdLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetProductByUserIdQuery, GetProductByUserIdQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetProductByUserIdQuery, GetProductByUserIdQueryVariables>(GetProductByUserIdDocument, options);
+        }
+export type GetProductByUserIdQueryHookResult = ReturnType<typeof useGetProductByUserIdQuery>;
+export type GetProductByUserIdLazyQueryHookResult = ReturnType<typeof useGetProductByUserIdLazyQuery>;
+export type GetProductByUserIdQueryResult = Apollo.QueryResult<GetProductByUserIdQuery, GetProductByUserIdQueryVariables>;
 export const GetUserInfoDocument = gql`
     query getUserInfo($email: String!) {
   getUserInfo(email: $email) {
@@ -399,12 +496,26 @@ export type SignUpMutationVariables = Exact<{
 
 export type SignUpMutation = { __typename?: 'Mutation', signUp: { __typename?: 'AuthResponse', email: string, token: string, id: number } };
 
+export type CheckProductPriceByUrlQueryVariables = Exact<{
+  url: Scalars['String'];
+}>;
+
+
+export type CheckProductPriceByUrlQuery = { __typename?: 'Query', checkProductPriceByUrl: { __typename?: 'CheckProductPriceResponse', product_name: string, product_link: string, product_image_src: string, original_price: number } };
+
 export type CheckSecureCodeQueryVariables = Exact<{
   reset_password_secure_code: Scalars['String'];
 }>;
 
 
 export type CheckSecureCodeQuery = { __typename?: 'Query', checkSecureCode: { __typename?: 'CheckSecureCodeResponse', isValidCode: boolean, email: string } };
+
+export type GetProductByUserIdQueryVariables = Exact<{
+  userId: Scalars['Float'];
+}>;
+
+
+export type GetProductByUserIdQuery = { __typename?: 'Query', getProductByUserId: Array<{ __typename?: 'Product', product_name: string, product_link: string, product_image_src: string, original_price: number, current_price: number, desired_price: number, price_update_time: number, email_sent_time: number, status: ProductStatus, user_id: string }> };
 
 export type GetUserInfoQueryVariables = Exact<{
   email: Scalars['String'];

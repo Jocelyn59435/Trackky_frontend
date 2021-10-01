@@ -1,0 +1,8 @@
+query checkProductPriceByUrl($url: String!) {
+  checkProductPriceByUrl(url: $url) {
+    product_name
+    product_link
+    product_image_src
+    original_price
+  }
+}
