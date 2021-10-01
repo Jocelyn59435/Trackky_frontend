@@ -5,6 +5,7 @@ import { motion } from 'framer-motion';
 import Link from 'next/link';
 import { useAuth } from '../lib/useAuth';
 import Header from '../src/components/Header';
+import { useRouter } from 'next/router';
 
 type SignInFormData = {
   email: string;
@@ -12,11 +13,11 @@ type SignInFormData = {
 };
 
 export default function signInComponent() {
+  const router = useRouter();
   const {
     register,
     formState: { errors, isValid, isDirty },
     handleSubmit,
-    watch,
   } = useForm<SignInFormData>({ mode: 'onChange' });
   const [signInMutation, { data, loading, error }] = useSignInMutation();
   const [showError, setShowError] = useState('');
@@ -35,7 +36,7 @@ export default function signInComponent() {
       if (result.data) {
         setToken(result.data.signIn.token);
       }
-      window.location.href = `/users/${result.data.signIn.id}/landingpage`;
+      router.push(`/users/${result.data.signIn.id}/landingpage`);
     } catch (e) {
       setShowError(e.message);
     }
