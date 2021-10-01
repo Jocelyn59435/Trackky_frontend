@@ -1,15 +1,13 @@
-import React, { useRef } from 'react';
+import React, { useRef, useState } from 'react';
 import { useForm, SubmitHandler } from 'react-hook-form';
 import { useSignUpMutation } from '../graphql/generated';
 import { useAuth } from '../lib/useAuth';
 import { motion } from 'framer-motion';
-import Link from 'next/link';
-import Image from 'next/image';
-import { mode } from '../tailwind.config';
+import Header from '../src/components/Header';
 
 type SignUpFormData = {
-  firstName: string;
-  lastName: string;
+  first_name: string;
+  last_name: string;
   email: string;
   password: string;
   passwordToConfirm: string;
@@ -23,6 +21,7 @@ export default function signUpComponent() {
     watch,
   } = useForm<SignUpFormData>({ mode: 'onChange' });
   const [signUpMutation, { data, loading, error }] = useSignUpMutation();
+  const [showError, setShowError] = useState('');
 
   // reference.current accesses the reference value,
   // and reference.current = newValue updates the reference value.
@@ -34,9 +33,9 @@ export default function signUpComponent() {
   // update current value when password field changes
   password.current = watch('password', '');
 
-  const onSubmit: SubmitHandler<SignUpFormData> = async (data) => {
+  const onSubmit: SubmitHandler<SignUpFormData> = async (formData) => {
     // remove passwordToConfirm
-    const { passwordToConfirm, ...restData } = data;
+    const { passwordToConfirm, ...restData } = formData;
     try {
       const result = await signUpMutation({
         variables: {
@@ -50,26 +49,16 @@ export default function signUpComponent() {
       if (result.data) {
         const { setToken } = useAuth();
         setToken(result.data.signUp.token);
+        window.location.href = `/users/${result.data.signUp.id}/landingpage`;
       }
     } catch (e) {
-      throw new Error(e);
+      setShowError(e.message);
     }
   };
 
   return (
     <>
-      <div className='bg-indigo py-3 flex justify-between'>
-        <Link href='/'>
-          <div className='p-2 cursor-pointer'>
-            <Image
-              layout='fixed'
-              src='/trackky_header.png'
-              width={180}
-              height={50}
-            />
-          </div>
-        </Link>
-      </div>
+      <Header notSignedIn={false} />
       <div className='text-center py-5'>
         <span className=' text-indigo font-black font-sans text-3xl pl-5'>
           Sign Up
@@ -82,28 +71,28 @@ export default function signUpComponent() {
             <label className='block'>First Name:</label>
             <input
               className='w-full border-darkgrey border-2 rounded-lg h-10 hover:border-indigo focus:bg-transparent'
-              {...register('firstName', {
+              {...register('first_name', {
                 required: 'This is required.',
                 maxLength: { value: 20, message: 'Max input length is 20.' },
               })}
             />
           </div>
-          {errors.firstName && (
-            <p className='text-red'>{errors.firstName.message}</p>
+          {errors.first_name && (
+            <p className='text-red'>{errors.first_name.message}</p>
           )}
           <div>
             <label className='block'>Last Name:</label>
             <input
               className='w-full border-darkgrey border-2 rounded-lg h-10 hover:border-indigo focus:bg-transparent'
-              {...register('lastName', {
+              {...register('last_name', {
                 required: 'This is required.',
                 maxLength: { value: 20, message: 'Max input length is 20.' },
               })}
             />
           </div>
 
-          {errors.lastName && (
-            <p className='text-red'>{errors.lastName.message}</p>
+          {errors.last_name && (
+            <p className='text-red'>{errors.last_name.message}</p>
           )}
           <div>
             <label className='block'>Email:</label>
@@ -171,6 +160,7 @@ export default function signUpComponent() {
               />
             )}
           </motion.div>
+          {error && <p className='text-red'>{showError}</p>}
         </form>
       </div>
     </>

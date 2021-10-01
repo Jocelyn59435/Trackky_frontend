@@ -25,17 +25,24 @@ export type AddProductPayload = {
 export type AuthResponse = {
   __typename?: 'AuthResponse';
   email: Scalars['String'];
-  firstName: Scalars['String'];
-  lastName: Scalars['String'];
+  first_name: Scalars['String'];
+  id: Scalars['Float'];
+  last_name: Scalars['String'];
   token: Scalars['String'];
+};
+
+export type CheckSecureCodeResponse = {
+  __typename?: 'CheckSecureCodeResponse';
+  email: Scalars['String'];
+  isValidCode: Scalars['Boolean'];
 };
 
 export type Mutation = {
   __typename?: 'Mutation';
   addProduct: Product;
   deleteProduct: Scalars['Int'];
-  resetPassword: UpdatePasswordResponse;
-  resetPasswordRequest: UpdatePasswordRequestResponse;
+  resetPassword: ResetPasswordResponse;
+  resetPasswordRequest: ResetPasswordRequestResponse;
   signIn: AuthResponse;
   signUp: AuthResponse;
 };
@@ -54,6 +61,7 @@ export type MutationDeleteProductArgs = {
 
 export type MutationResetPasswordArgs = {
   passwordInput: Scalars['String'];
+  reset_password_secure_code: Scalars['String'];
 };
 
 
@@ -91,8 +99,14 @@ export type Product = {
 
 export type Query = {
   __typename?: 'Query';
+  checkSecureCode: CheckSecureCodeResponse;
   getProductById: Product;
   getUserInfo: User_Info;
+};
+
+
+export type QueryCheckSecureCodeArgs = {
+  reset_password_secure_code: Scalars['String'];
 };
 
 
@@ -105,6 +119,17 @@ export type QueryGetUserInfoArgs = {
   email: Scalars['String'];
 };
 
+export type ResetPasswordRequestResponse = {
+  __typename?: 'ResetPasswordRequestResponse';
+  id: Scalars['Float'];
+};
+
+export type ResetPasswordResponse = {
+  __typename?: 'ResetPasswordResponse';
+  email: Scalars['String'];
+  id: Scalars['Float'];
+};
+
 export type SignInPayload = {
   email: Scalars['String'];
   password: Scalars['String'];
@@ -112,19 +137,9 @@ export type SignInPayload = {
 
 export type SignUpPayload = {
   email: Scalars['String'];
-  firstName: Scalars['String'];
-  lastName: Scalars['String'];
+  first_name: Scalars['String'];
+  last_name: Scalars['String'];
   password: Scalars['String'];
-};
-
-export type UpdatePasswordRequestResponse = {
-  __typename?: 'UpdatePasswordRequestResponse';
-  token: Scalars['String'];
-};
-
-export type UpdatePasswordResponse = {
-  __typename?: 'UpdatePasswordResponse';
-  email: Scalars['String'];
 };
 
 /** type definition for user_info */
@@ -143,9 +158,13 @@ export enum ProductStatus {
 
 
 export const ResetPasswordDocument = gql`
-    mutation resetPassword($passwordInput: String!) {
-  resetPassword(passwordInput: $passwordInput) {
+    mutation resetPassword($passwordInput: String!, $reset_password_secure_code: String!) {
+  resetPassword(
+    passwordInput: $passwordInput
+    reset_password_secure_code: $reset_password_secure_code
+  ) {
     email
+    id
   }
 }
     `;
@@ -165,6 +184,7 @@ export type ResetPasswordMutationFn = Apollo.MutationFunction<ResetPasswordMutat
  * const [resetPasswordMutation, { data, loading, error }] = useResetPasswordMutation({
  *   variables: {
  *      passwordInput: // value for 'passwordInput'
+ *      reset_password_secure_code: // value for 'reset_password_secure_code'
  *   },
  * });
  */
@@ -178,7 +198,7 @@ export type ResetPasswordMutationOptions = Apollo.BaseMutationOptions<ResetPassw
 export const ResetPasswordRequestDocument = gql`
     mutation resetPasswordRequest($email: String!) {
   resetPasswordRequest(email: $email) {
-    token
+    id
   }
 }
     `;
@@ -213,6 +233,7 @@ export const SignInDocument = gql`
   signIn(input: $input) {
     email
     token
+    id
   }
 }
     `;
@@ -247,6 +268,7 @@ export const SignUpDocument = gql`
   signUp(input: $input) {
     email
     token
+    id
   }
 }
     `;
@@ -276,6 +298,42 @@ export function useSignUpMutation(baseOptions?: Apollo.MutationHookOptions<SignU
 export type SignUpMutationHookResult = ReturnType<typeof useSignUpMutation>;
 export type SignUpMutationResult = Apollo.MutationResult<SignUpMutation>;
 export type SignUpMutationOptions = Apollo.BaseMutationOptions<SignUpMutation, SignUpMutationVariables>;
+export const CheckSecureCodeDocument = gql`
+    query checkSecureCode($reset_password_secure_code: String!) {
+  checkSecureCode(reset_password_secure_code: $reset_password_secure_code) {
+    isValidCode
+    email
+  }
+}
+    `;
+
+/**
+ * __useCheckSecureCodeQuery__
+ *
+ * To run a query within a React component, call `useCheckSecureCodeQuery` and pass it any options that fit your needs.
+ * When your component renders, `useCheckSecureCodeQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useCheckSecureCodeQuery({
+ *   variables: {
+ *      reset_password_secure_code: // value for 'reset_password_secure_code'
+ *   },
+ * });
+ */
+export function useCheckSecureCodeQuery(baseOptions: Apollo.QueryHookOptions<CheckSecureCodeQuery, CheckSecureCodeQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<CheckSecureCodeQuery, CheckSecureCodeQueryVariables>(CheckSecureCodeDocument, options);
+      }
+export function useCheckSecureCodeLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<CheckSecureCodeQuery, CheckSecureCodeQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<CheckSecureCodeQuery, CheckSecureCodeQueryVariables>(CheckSecureCodeDocument, options);
+        }
+export type CheckSecureCodeQueryHookResult = ReturnType<typeof useCheckSecureCodeQuery>;
+export type CheckSecureCodeLazyQueryHookResult = ReturnType<typeof useCheckSecureCodeLazyQuery>;
+export type CheckSecureCodeQueryResult = Apollo.QueryResult<CheckSecureCodeQuery, CheckSecureCodeQueryVariables>;
 export const GetUserInfoDocument = gql`
     query getUserInfo($email: String!) {
   getUserInfo(email: $email) {
@@ -314,31 +372,39 @@ export type GetUserInfoLazyQueryHookResult = ReturnType<typeof useGetUserInfoLaz
 export type GetUserInfoQueryResult = Apollo.QueryResult<GetUserInfoQuery, GetUserInfoQueryVariables>;
 export type ResetPasswordMutationVariables = Exact<{
   passwordInput: Scalars['String'];
+  reset_password_secure_code: Scalars['String'];
 }>;
 
 
-export type ResetPasswordMutation = { __typename?: 'Mutation', resetPassword: { __typename?: 'UpdatePasswordResponse', email: string } };
+export type ResetPasswordMutation = { __typename?: 'Mutation', resetPassword: { __typename?: 'ResetPasswordResponse', email: string, id: number } };
 
 export type ResetPasswordRequestMutationVariables = Exact<{
   email: Scalars['String'];
 }>;
 
 
-export type ResetPasswordRequestMutation = { __typename?: 'Mutation', resetPasswordRequest: { __typename?: 'UpdatePasswordRequestResponse', token: string } };
+export type ResetPasswordRequestMutation = { __typename?: 'Mutation', resetPasswordRequest: { __typename?: 'ResetPasswordRequestResponse', id: number } };
 
 export type SignInMutationVariables = Exact<{
   input: SignInPayload;
 }>;
 
 
-export type SignInMutation = { __typename?: 'Mutation', signIn: { __typename?: 'AuthResponse', email: string, token: string } };
+export type SignInMutation = { __typename?: 'Mutation', signIn: { __typename?: 'AuthResponse', email: string, token: string, id: number } };
 
 export type SignUpMutationVariables = Exact<{
   input: SignUpPayload;
 }>;
 
 
-export type SignUpMutation = { __typename?: 'Mutation', signUp: { __typename?: 'AuthResponse', email: string, token: string } };
+export type SignUpMutation = { __typename?: 'Mutation', signUp: { __typename?: 'AuthResponse', email: string, token: string, id: number } };
+
+export type CheckSecureCodeQueryVariables = Exact<{
+  reset_password_secure_code: Scalars['String'];
+}>;
+
+
+export type CheckSecureCodeQuery = { __typename?: 'Query', checkSecureCode: { __typename?: 'CheckSecureCodeResponse', isValidCode: boolean, email: string } };
 
 export type GetUserInfoQueryVariables = Exact<{
   email: Scalars['String'];

@@ -1,38 +1,49 @@
-// add jwt token function
-// send email
-
-import React, { useRef } from 'react';
+import React, { useRef, useState } from 'react';
 import { useForm, SubmitHandler } from 'react-hook-form';
+import { useRouter } from 'next/router';
+import Header from '../src/components/Header';
 import { motion } from 'framer-motion';
-import Link from 'next/link';
-import Image from 'next/image';
-import { useResetPasswordMutation } from '../graphql/generated';
+import {
+  useCheckSecureCodeQuery,
+  useResetPasswordMutation,
+} from '../graphql/generated';
 
 type ResetPasswordFormData = {
   password: string;
   passwordToConfirm: string;
 };
 
-export default function signUpComponent() {
+export default function ResetPasswordComponent() {
   const {
     register,
-    formState: { errors, isValid },
+    formState: { errors, isValid, isDirty },
     handleSubmit,
     watch,
   } = useForm<ResetPasswordFormData>();
-  const [resetPasswordMutation, { data, loading, error }] =
-    useResetPasswordMutation();
+
+  const router = useRouter();
+  const { securecode } = router.query;
+
+  const { data, loading, error } = useCheckSecureCodeQuery({
+    variables: {
+      reset_password_secure_code: securecode as string,
+    },
+  });
+
+  const [resetPasswordMutation] = useResetPasswordMutation();
 
   const password = useRef({}); // initialize a blank object
-
   // update current value when password field changes
   password.current = watch('password', '');
 
-  const onSubmit: SubmitHandler<ResetPasswordFormData> = async (data) => {
+  const [showError, setShowError] = useState('');
+
+  const onSubmit: SubmitHandler<ResetPasswordFormData> = async (formData) => {
     try {
       const result = await resetPasswordMutation({
         variables: {
-          passwordInput: data.password,
+          passwordInput: formData.password,
+          reset_password_secure_code: securecode as string,
         },
       });
 
@@ -40,24 +51,13 @@ export default function signUpComponent() {
         throw new Error('Cannot reset password' + result.errors);
       }
     } catch (e) {
-      throw new Error(e);
+      setShowError(e.message);
     }
   };
 
   return (
     <>
-      <div className='bg-indigo py-3 flex justify-between'>
-        <Link href='/'>
-          <div className='p-2 cursor-pointer'>
-            <Image
-              layout='fixed'
-              src='/trackky_header.png'
-              width={180}
-              height={50}
-            />
-          </div>
-        </Link>
-      </div>
+      <Header notSignedIn={false} />
       <div className='text-center py-5'>
         <span className=' text-indigo font-black font-sans text-3xl pl-5'>
           Reset Password
@@ -105,10 +105,15 @@ export default function signUpComponent() {
             whileTap={{ scale: 0.8 }}
           >
             <input
+              disabled={!isDirty || !isValid}
               type='submit'
               className='w-full h-10 rounded-md bg-indigo-400 text-grey hover:bg-indigo text-lg font-bold'
             />
           </motion.div>
+          {error && <p className='text-red'>{showError}</p>}
+          {data && (
+            <p>`Congrats! Your password for has been reset successfully.`</p>
+          )}
         </form>
       </div>
     </>
