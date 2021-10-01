@@ -2,10 +2,16 @@
 import { gql } from '@apollo/client';
 import * as Apollo from '@apollo/client';
 export type Maybe<T> = T | null;
-export type Exact<T extends { [key: string]: unknown }> = { [K in keyof T]: T[K] };
-export type MakeOptional<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]?: Maybe<T[SubKey]> };
-export type MakeMaybe<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]: Maybe<T[SubKey]> };
-const defaultOptions =  {}
+export type Exact<T extends { [key: string]: unknown }> = {
+  [K in keyof T]: T[K];
+};
+export type MakeOptional<T, K extends keyof T> = Omit<T, K> & {
+  [SubKey in K]?: Maybe<T[SubKey]>;
+};
+export type MakeMaybe<T, K extends keyof T> = Omit<T, K> & {
+  [SubKey in K]: Maybe<T[SubKey]>;
+};
+const defaultOptions = {};
 /** All built-in and custom scalars, mapped to their actual values */
 export type Scalars = {
   ID: string;
@@ -25,47 +31,49 @@ export type AddProductPayload = {
 export type AuthResponse = {
   __typename?: 'AuthResponse';
   email: Scalars['String'];
-  firstName: Scalars['String'];
-  lastName: Scalars['String'];
+  first_name: Scalars['String'];
+  id: Scalars['Float'];
+  last_name: Scalars['String'];
   token: Scalars['String'];
+};
+
+export type CheckSecureCodeResponse = {
+  __typename?: 'CheckSecureCodeResponse';
+  email: Scalars['String'];
+  isValidCode: Scalars['Boolean'];
 };
 
 export type Mutation = {
   __typename?: 'Mutation';
   addProduct: Product;
   deleteProduct: Scalars['Int'];
-  resetPassword: UpdatePasswordResponse;
-  resetPasswordRequest: UpdatePasswordRequestResponse;
+  resetPassword: ResetPasswordResponse;
+  resetPasswordRequest: ResetPasswordRequestResponse;
   signIn: AuthResponse;
   signUp: AuthResponse;
 };
 
-
 export type MutationAddProductArgs = {
   input: AddProductPayload;
 };
-
 
 export type MutationDeleteProductArgs = {
   id: Scalars['String'];
   user_id: Scalars['String'];
 };
 
-
 export type MutationResetPasswordArgs = {
   passwordInput: Scalars['String'];
+  reset_password_secure_code: Scalars['String'];
 };
-
 
 export type MutationResetPasswordRequestArgs = {
   email: Scalars['String'];
 };
 
-
 export type MutationSignInArgs = {
   input: SignInPayload;
 };
-
 
 export type MutationSignUpArgs = {
   input: SignUpPayload;
@@ -91,18 +99,32 @@ export type Product = {
 
 export type Query = {
   __typename?: 'Query';
+  checkSecureCode: CheckSecureCodeResponse;
   getProductById: Product;
   getUserInfo: User_Info;
 };
 
+export type QueryCheckSecureCodeArgs = {
+  reset_password_secure_code: Scalars['String'];
+};
 
 export type QueryGetProductByIdArgs = {
   id: Scalars['String'];
 };
 
-
 export type QueryGetUserInfoArgs = {
   email: Scalars['String'];
+};
+
+export type ResetPasswordRequestResponse = {
+  __typename?: 'ResetPasswordRequestResponse';
+  id: Scalars['Float'];
+};
+
+export type ResetPasswordResponse = {
+  __typename?: 'ResetPasswordResponse';
+  email: Scalars['String'];
+  id: Scalars['Float'];
 };
 
 export type SignInPayload = {
@@ -112,19 +134,9 @@ export type SignInPayload = {
 
 export type SignUpPayload = {
   email: Scalars['String'];
-  firstName: Scalars['String'];
-  lastName: Scalars['String'];
+  first_name: Scalars['String'];
+  last_name: Scalars['String'];
   password: Scalars['String'];
-};
-
-export type UpdatePasswordRequestResponse = {
-  __typename?: 'UpdatePasswordRequestResponse';
-  token: Scalars['String'];
-};
-
-export type UpdatePasswordResponse = {
-  __typename?: 'UpdatePasswordResponse';
-  email: Scalars['String'];
 };
 
 /** type definition for user_info */
@@ -138,18 +150,27 @@ export type User_Info = {
 
 export enum ProductStatus {
   Active = 'active',
-  Finished = 'finished'
+  Finished = 'finished',
 }
-
 
 export const ResetPasswordDocument = gql`
-    mutation resetPassword($passwordInput: String!) {
-  resetPassword(passwordInput: $passwordInput) {
-    email
+  mutation resetPassword(
+    $passwordInput: String!
+    $reset_password_secure_code: String!
+  ) {
+    resetPassword(
+      passwordInput: $passwordInput
+      reset_password_secure_code: $reset_password_secure_code
+    ) {
+      email
+      id
+    }
   }
-}
-    `;
-export type ResetPasswordMutationFn = Apollo.MutationFunction<ResetPasswordMutation, ResetPasswordMutationVariables>;
+`;
+export type ResetPasswordMutationFn = Apollo.MutationFunction<
+  ResetPasswordMutation,
+  ResetPasswordMutationVariables
+>;
 
 /**
  * __useResetPasswordMutation__
@@ -165,24 +186,42 @@ export type ResetPasswordMutationFn = Apollo.MutationFunction<ResetPasswordMutat
  * const [resetPasswordMutation, { data, loading, error }] = useResetPasswordMutation({
  *   variables: {
  *      passwordInput: // value for 'passwordInput'
+ *      reset_password_secure_code: // value for 'reset_password_secure_code'
  *   },
  * });
  */
-export function useResetPasswordMutation(baseOptions?: Apollo.MutationHookOptions<ResetPasswordMutation, ResetPasswordMutationVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useMutation<ResetPasswordMutation, ResetPasswordMutationVariables>(ResetPasswordDocument, options);
-      }
-export type ResetPasswordMutationHookResult = ReturnType<typeof useResetPasswordMutation>;
-export type ResetPasswordMutationResult = Apollo.MutationResult<ResetPasswordMutation>;
-export type ResetPasswordMutationOptions = Apollo.BaseMutationOptions<ResetPasswordMutation, ResetPasswordMutationVariables>;
-export const ResetPasswordRequestDocument = gql`
-    mutation resetPasswordRequest($email: String!) {
-  resetPasswordRequest(email: $email) {
-    token
-  }
+export function useResetPasswordMutation(
+  baseOptions?: Apollo.MutationHookOptions<
+    ResetPasswordMutation,
+    ResetPasswordMutationVariables
+  >
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useMutation<
+    ResetPasswordMutation,
+    ResetPasswordMutationVariables
+  >(ResetPasswordDocument, options);
 }
-    `;
-export type ResetPasswordRequestMutationFn = Apollo.MutationFunction<ResetPasswordRequestMutation, ResetPasswordRequestMutationVariables>;
+export type ResetPasswordMutationHookResult = ReturnType<
+  typeof useResetPasswordMutation
+>;
+export type ResetPasswordMutationResult =
+  Apollo.MutationResult<ResetPasswordMutation>;
+export type ResetPasswordMutationOptions = Apollo.BaseMutationOptions<
+  ResetPasswordMutation,
+  ResetPasswordMutationVariables
+>;
+export const ResetPasswordRequestDocument = gql`
+  mutation resetPasswordRequest($email: String!) {
+    resetPasswordRequest(email: $email) {
+      id
+    }
+  }
+`;
+export type ResetPasswordRequestMutationFn = Apollo.MutationFunction<
+  ResetPasswordRequestMutation,
+  ResetPasswordRequestMutationVariables
+>;
 
 /**
  * __useResetPasswordRequestMutation__
@@ -201,22 +240,40 @@ export type ResetPasswordRequestMutationFn = Apollo.MutationFunction<ResetPasswo
  *   },
  * });
  */
-export function useResetPasswordRequestMutation(baseOptions?: Apollo.MutationHookOptions<ResetPasswordRequestMutation, ResetPasswordRequestMutationVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useMutation<ResetPasswordRequestMutation, ResetPasswordRequestMutationVariables>(ResetPasswordRequestDocument, options);
-      }
-export type ResetPasswordRequestMutationHookResult = ReturnType<typeof useResetPasswordRequestMutation>;
-export type ResetPasswordRequestMutationResult = Apollo.MutationResult<ResetPasswordRequestMutation>;
-export type ResetPasswordRequestMutationOptions = Apollo.BaseMutationOptions<ResetPasswordRequestMutation, ResetPasswordRequestMutationVariables>;
-export const SignInDocument = gql`
-    mutation signIn($input: SignInPayload!) {
-  signIn(input: $input) {
-    email
-    token
-  }
+export function useResetPasswordRequestMutation(
+  baseOptions?: Apollo.MutationHookOptions<
+    ResetPasswordRequestMutation,
+    ResetPasswordRequestMutationVariables
+  >
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useMutation<
+    ResetPasswordRequestMutation,
+    ResetPasswordRequestMutationVariables
+  >(ResetPasswordRequestDocument, options);
 }
-    `;
-export type SignInMutationFn = Apollo.MutationFunction<SignInMutation, SignInMutationVariables>;
+export type ResetPasswordRequestMutationHookResult = ReturnType<
+  typeof useResetPasswordRequestMutation
+>;
+export type ResetPasswordRequestMutationResult =
+  Apollo.MutationResult<ResetPasswordRequestMutation>;
+export type ResetPasswordRequestMutationOptions = Apollo.BaseMutationOptions<
+  ResetPasswordRequestMutation,
+  ResetPasswordRequestMutationVariables
+>;
+export const SignInDocument = gql`
+  mutation signIn($input: SignInPayload!) {
+    signIn(input: $input) {
+      email
+      token
+      id
+    }
+  }
+`;
+export type SignInMutationFn = Apollo.MutationFunction<
+  SignInMutation,
+  SignInMutationVariables
+>;
 
 /**
  * __useSignInMutation__
@@ -235,22 +292,37 @@ export type SignInMutationFn = Apollo.MutationFunction<SignInMutation, SignInMut
  *   },
  * });
  */
-export function useSignInMutation(baseOptions?: Apollo.MutationHookOptions<SignInMutation, SignInMutationVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useMutation<SignInMutation, SignInMutationVariables>(SignInDocument, options);
-      }
+export function useSignInMutation(
+  baseOptions?: Apollo.MutationHookOptions<
+    SignInMutation,
+    SignInMutationVariables
+  >
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useMutation<SignInMutation, SignInMutationVariables>(
+    SignInDocument,
+    options
+  );
+}
 export type SignInMutationHookResult = ReturnType<typeof useSignInMutation>;
 export type SignInMutationResult = Apollo.MutationResult<SignInMutation>;
-export type SignInMutationOptions = Apollo.BaseMutationOptions<SignInMutation, SignInMutationVariables>;
+export type SignInMutationOptions = Apollo.BaseMutationOptions<
+  SignInMutation,
+  SignInMutationVariables
+>;
 export const SignUpDocument = gql`
-    mutation signUp($input: SignUpPayload!) {
-  signUp(input: $input) {
-    email
-    token
+  mutation signUp($input: SignUpPayload!) {
+    signUp(input: $input) {
+      email
+      token
+      id
+    }
   }
-}
-    `;
-export type SignUpMutationFn = Apollo.MutationFunction<SignUpMutation, SignUpMutationVariables>;
+`;
+export type SignUpMutationFn = Apollo.MutationFunction<
+  SignUpMutation,
+  SignUpMutationVariables
+>;
 
 /**
  * __useSignUpMutation__
@@ -269,21 +341,91 @@ export type SignUpMutationFn = Apollo.MutationFunction<SignUpMutation, SignUpMut
  *   },
  * });
  */
-export function useSignUpMutation(baseOptions?: Apollo.MutationHookOptions<SignUpMutation, SignUpMutationVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useMutation<SignUpMutation, SignUpMutationVariables>(SignUpDocument, options);
-      }
+export function useSignUpMutation(
+  baseOptions?: Apollo.MutationHookOptions<
+    SignUpMutation,
+    SignUpMutationVariables
+  >
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useMutation<SignUpMutation, SignUpMutationVariables>(
+    SignUpDocument,
+    options
+  );
+}
 export type SignUpMutationHookResult = ReturnType<typeof useSignUpMutation>;
 export type SignUpMutationResult = Apollo.MutationResult<SignUpMutation>;
-export type SignUpMutationOptions = Apollo.BaseMutationOptions<SignUpMutation, SignUpMutationVariables>;
-export const GetUserInfoDocument = gql`
-    query getUserInfo($email: String!) {
-  getUserInfo(email: $email) {
-    id
-    created_at
+export type SignUpMutationOptions = Apollo.BaseMutationOptions<
+  SignUpMutation,
+  SignUpMutationVariables
+>;
+export const CheckSecureCodeDocument = gql`
+  query checkSecureCode($reset_password_secure_code: String!) {
+    checkSecureCode(reset_password_secure_code: $reset_password_secure_code) {
+      isValidCode
+      email
+    }
   }
+`;
+
+/**
+ * __useCheckSecureCodeQuery__
+ *
+ * To run a query within a React component, call `useCheckSecureCodeQuery` and pass it any options that fit your needs.
+ * When your component renders, `useCheckSecureCodeQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useCheckSecureCodeQuery({
+ *   variables: {
+ *      reset_password_secure_code: // value for 'reset_password_secure_code'
+ *   },
+ * });
+ */
+export function useCheckSecureCodeQuery(
+  baseOptions: Apollo.QueryHookOptions<
+    CheckSecureCodeQuery,
+    CheckSecureCodeQueryVariables
+  >
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useQuery<CheckSecureCodeQuery, CheckSecureCodeQueryVariables>(
+    CheckSecureCodeDocument,
+    options
+  );
 }
-    `;
+export function useCheckSecureCodeLazyQuery(
+  baseOptions?: Apollo.LazyQueryHookOptions<
+    CheckSecureCodeQuery,
+    CheckSecureCodeQueryVariables
+  >
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useLazyQuery<
+    CheckSecureCodeQuery,
+    CheckSecureCodeQueryVariables
+  >(CheckSecureCodeDocument, options);
+}
+export type CheckSecureCodeQueryHookResult = ReturnType<
+  typeof useCheckSecureCodeQuery
+>;
+export type CheckSecureCodeLazyQueryHookResult = ReturnType<
+  typeof useCheckSecureCodeLazyQuery
+>;
+export type CheckSecureCodeQueryResult = Apollo.QueryResult<
+  CheckSecureCodeQuery,
+  CheckSecureCodeQueryVariables
+>;
+export const GetUserInfoDocument = gql`
+  query getUserInfo($email: String!) {
+    getUserInfo(email: $email) {
+      id
+      created_at
+    }
+  }
+`;
 
 /**
  * __useGetUserInfoQuery__
@@ -301,48 +443,110 @@ export const GetUserInfoDocument = gql`
  *   },
  * });
  */
-export function useGetUserInfoQuery(baseOptions: Apollo.QueryHookOptions<GetUserInfoQuery, GetUserInfoQueryVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useQuery<GetUserInfoQuery, GetUserInfoQueryVariables>(GetUserInfoDocument, options);
-      }
-export function useGetUserInfoLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetUserInfoQuery, GetUserInfoQueryVariables>) {
-          const options = {...defaultOptions, ...baseOptions}
-          return Apollo.useLazyQuery<GetUserInfoQuery, GetUserInfoQueryVariables>(GetUserInfoDocument, options);
-        }
+export function useGetUserInfoQuery(
+  baseOptions: Apollo.QueryHookOptions<
+    GetUserInfoQuery,
+    GetUserInfoQueryVariables
+  >
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useQuery<GetUserInfoQuery, GetUserInfoQueryVariables>(
+    GetUserInfoDocument,
+    options
+  );
+}
+export function useGetUserInfoLazyQuery(
+  baseOptions?: Apollo.LazyQueryHookOptions<
+    GetUserInfoQuery,
+    GetUserInfoQueryVariables
+  >
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useLazyQuery<GetUserInfoQuery, GetUserInfoQueryVariables>(
+    GetUserInfoDocument,
+    options
+  );
+}
 export type GetUserInfoQueryHookResult = ReturnType<typeof useGetUserInfoQuery>;
-export type GetUserInfoLazyQueryHookResult = ReturnType<typeof useGetUserInfoLazyQuery>;
-export type GetUserInfoQueryResult = Apollo.QueryResult<GetUserInfoQuery, GetUserInfoQueryVariables>;
+export type GetUserInfoLazyQueryHookResult = ReturnType<
+  typeof useGetUserInfoLazyQuery
+>;
+export type GetUserInfoQueryResult = Apollo.QueryResult<
+  GetUserInfoQuery,
+  GetUserInfoQueryVariables
+>;
 export type ResetPasswordMutationVariables = Exact<{
   passwordInput: Scalars['String'];
+  reset_password_secure_code: Scalars['String'];
 }>;
 
-
-export type ResetPasswordMutation = { __typename?: 'Mutation', resetPassword: { __typename?: 'UpdatePasswordResponse', email: string } };
+export type ResetPasswordMutation = {
+  __typename?: 'Mutation';
+  resetPassword: {
+    __typename?: 'ResetPasswordResponse';
+    email: string;
+    id: number;
+  };
+};
 
 export type ResetPasswordRequestMutationVariables = Exact<{
   email: Scalars['String'];
 }>;
 
-
-export type ResetPasswordRequestMutation = { __typename?: 'Mutation', resetPasswordRequest: { __typename?: 'UpdatePasswordRequestResponse', token: string } };
+export type ResetPasswordRequestMutation = {
+  __typename?: 'Mutation';
+  resetPasswordRequest: {
+    __typename?: 'ResetPasswordRequestResponse';
+    id: number;
+  };
+};
 
 export type SignInMutationVariables = Exact<{
   input: SignInPayload;
 }>;
 
-
-export type SignInMutation = { __typename?: 'Mutation', signIn: { __typename?: 'AuthResponse', email: string, token: string } };
+export type SignInMutation = {
+  __typename?: 'Mutation';
+  signIn: {
+    __typename?: 'AuthResponse';
+    email: string;
+    token: string;
+    id: number;
+  };
+};
 
 export type SignUpMutationVariables = Exact<{
   input: SignUpPayload;
 }>;
 
+export type SignUpMutation = {
+  __typename?: 'Mutation';
+  signUp: {
+    __typename?: 'AuthResponse';
+    email: string;
+    token: string;
+    id: number;
+  };
+};
 
-export type SignUpMutation = { __typename?: 'Mutation', signUp: { __typename?: 'AuthResponse', email: string, token: string } };
+export type CheckSecureCodeQueryVariables = Exact<{
+  reset_password_secure_code: Scalars['String'];
+}>;
+
+export type CheckSecureCodeQuery = {
+  __typename?: 'Query';
+  checkSecureCode: {
+    __typename?: 'CheckSecureCodeResponse';
+    isValidCode: boolean;
+    email: string;
+  };
+};
 
 export type GetUserInfoQueryVariables = Exact<{
   email: Scalars['String'];
 }>;
 
-
-export type GetUserInfoQuery = { __typename?: 'Query', getUserInfo: { __typename?: 'User_info', id: string, created_at: any } };
+export type GetUserInfoQuery = {
+  __typename?: 'Query';
+  getUserInfo: { __typename?: 'User_info'; id: string; created_at: any };
+};

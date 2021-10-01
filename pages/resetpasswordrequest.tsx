@@ -1,41 +1,39 @@
 import React, { useState } from 'react';
 import { useForm, SubmitHandler } from 'react-hook-form';
-import { useSignInMutation } from '../graphql/generated';
 import { motion } from 'framer-motion';
-import Link from 'next/link';
-import { useAuth } from '../utils/useAuth';
 import Header from '../components/Header';
+import { useResetPasswordRequestMutation } from '../graphql/generated';
+import { resultKeyNameFromField } from '@apollo/client/utilities';
 
-type SignInFormData = {
+type ResetPasswordRequestFormData = {
   email: string;
-  password: string;
 };
 
-export default function signInComponent() {
+export default function ResetPasswordRequestComponent() {
   const {
     register,
     formState: { errors, isValid, isDirty },
     handleSubmit,
-    watch,
-  } = useForm<SignInFormData>({ mode: 'onChange' });
-  const [signInMutation, { data, loading, error }] = useSignInMutation();
+  } = useForm<ResetPasswordRequestFormData>({ mode: 'onChange' });
+
+  const [resetPasswordRequestMutation, { data, loading, error }] =
+    useResetPasswordRequestMutation();
+
   const [showError, setShowError] = useState('');
-  const { setToken } = useAuth();
-  const onSubmit: SubmitHandler<SignInFormData> = async (formData) => {
+
+  const onSubmit: SubmitHandler<ResetPasswordRequestFormData> = async (
+    formData
+  ) => {
     try {
-      const result = await signInMutation({
+      const result = await resetPasswordRequestMutation({
         variables: {
-          input: formData,
+          email: formData.email,
         },
       });
-
       if (result.errors) {
-        throw new Error('Cannot sign in: ' + result.errors);
+        throw new Error('Failed to send request' + result.errors);
       }
-      if (result.data) {
-        setToken(result.data.signIn.token);
-      }
-      window.location.href = `/users/${result.data.signIn.id}/landingpage`;
+      console.log(result);
     } catch (e) {
       setShowError(e.message);
     }
@@ -46,7 +44,7 @@ export default function signInComponent() {
       <Header notSignedIn={false} />
       <div className='text-center py-5'>
         <span className=' text-indigo font-black font-sans text-3xl pl-5'>
-          Sign In
+          Send Reset Password Request
         </span>
       </div>
 
@@ -68,22 +66,14 @@ export default function signInComponent() {
             />
           </div>
           {errors.email && <p className='text-red'>{errors.email.message}</p>}
-          <div>
-            <label className='block'>Password:</label>
-            <input
-              type='password'
-              className='w-full border-darkgrey border-2 rounded-lg h-10 hover:border-indigo focus:bg-transparent'
-              {...register('password', { required: true, maxLength: 15 })}
-            />
-          </div>
-          <div></div>
+
           <motion.div
             transition={{ duration: 0.5 }}
             whileHover={{ scale: 1.01 }}
             whileTap={{ scale: 0.8 }}
           >
             {loading ? (
-              <div className='w-full h-10 rounded-md bg-indigo-400 text-grey hover:bg-indigo text-lg text-center font-bold items-center'>
+              <div className='w-full h-10 rounded-md bg-indigo-400 text-grey hover:bg-indigo text-lg text-center font-bold items-center opacity-50'>
                 <span>Loading ...</span>
               </div>
             ) : (
@@ -95,20 +85,13 @@ export default function signInComponent() {
             )}
           </motion.div>
           {error && <p className='text-red'>{showError}</p>}
+          {data?.resetPasswordRequest?.id && (
+            <p>
+              The validation code is sent to your email, please click on this
+              link to reset your password with the code.
+            </p>
+          )}
         </form>
-        <div className='text-center '>
-          <hr className='border-0 bg-gray-300 text-gray-500 h-px my-10' />
-          <span>New to Trackky?</span>{' '}
-          <Link href='/signup'>
-            <a className='hover:underline'>Sign up</a>
-          </Link>
-        </div>
-        <div className='text-center mt-5'>
-          <span>Forget your password?</span>{' '}
-          <Link href='/resetpasswordrequest'>
-            <a className='hover:underline'>Reset here</a>
-          </Link>
-        </div>
       </div>
     </>
   );

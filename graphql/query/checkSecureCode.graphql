@@ -1,0 +1,6 @@
+query checkSecureCode($reset_password_secure_code: String!) {
+  checkSecureCode(reset_password_secure_code: $reset_password_secure_code) {
+    isValidCode
+    email
+  }
+}

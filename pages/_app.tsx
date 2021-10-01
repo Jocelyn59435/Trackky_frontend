@@ -1,7 +1,7 @@
 import 'tailwindcss/tailwind.css';
 import { ApolloProvider } from '@apollo/client';
-import { useApollo } from '../lib/useApollo';
-import { useAuth } from '../lib/useAuth';
+import { useApollo } from '../utils/useApollo';
+import { useAuth } from '../utils/useAuth';
 
 export default function App({ Component, pageProps }) {
   const { token } = useAuth();
