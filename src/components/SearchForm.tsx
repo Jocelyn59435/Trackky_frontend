@@ -1,9 +1,6 @@
 import { motion } from 'framer-motion';
-import Image from 'next/dist/client/image';
 import { useForm, SubmitHandler } from 'react-hook-form';
 import { useCheckProductPriceByUrlLazyQuery } from '../../graphql/generated';
-import Slider from '@mui/material/Slider';
-import { styled } from '@mui/material/styles';
 import { SearchResult } from './SearchResult';
 
 type SearchProductByUrlData = {
@@ -27,6 +24,7 @@ export default function SearchForm(props: SearchFormProps) {
     register,
     formState: { errors, isValid, isDirty },
     handleSubmit,
+    getValues,
   } = useForm<SearchProductByUrlData>({ mode: 'onChange' });
   const onSubmit: SubmitHandler<SearchProductByUrlData> = async (formData) => {
     await checkProductPriceByUrl({
@@ -35,6 +33,8 @@ export default function SearchForm(props: SearchFormProps) {
       },
     });
   };
+
+  const formValues = getValues();
   return (
     <>
       <div className='mx-auto lg:w-2/3 md:w-5/6 sm:w-11/12 p-4 '>
@@ -67,7 +67,7 @@ export default function SearchForm(props: SearchFormProps) {
                   className='w-full
            h-10 rounded-md bg-indigo-400 text-grey hover:bg-indigo text-lg text-center font-bold items-center align-middle'
                 >
-                  <span>Fetching ...</span>
+                  <span className= 'm-auto'>Fetching ...</span>
                 </div>
               ) : (
                 <input
@@ -94,6 +94,7 @@ export default function SearchForm(props: SearchFormProps) {
             product_name={
               checkPriceQueryData?.checkProductPriceByUrl?.product_name
             }
+            product_link={formValues.url}
             original_price={
               checkPriceQueryData?.checkProductPriceByUrl?.original_price
             }

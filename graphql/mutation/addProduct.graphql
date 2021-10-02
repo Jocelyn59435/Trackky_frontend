@@ -1,5 +1,6 @@
-mutation addProduct($input: AddProductPayload!){
-    addProduct(input: $input){
-        Product!
-    }
+mutation addProduct($input: AddProductPayload!) {
+  addProduct(input: $input) {
+    id
+    product_name
+  }
 }
