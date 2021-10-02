@@ -7,7 +7,9 @@ export const useApollo = (token: string | undefined) =>
     link: new HttpLink({
       // uri: 'https://trackkybackend.herokuapp.com/graphql',
       uri: 'http://localhost:4000/graphql',
-      headers: token ? `Bearer ${token}` : '',
+      headers: {
+        authorization: token ? `Bearer ${token}` : '',
+      },
     }),
     ssrMode: typeof window === 'undefined',
   });
