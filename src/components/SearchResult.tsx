@@ -11,12 +11,12 @@ type SearchResultProps = {
 };
 
 type AddToTrackListData = {
-  desired_price: number;
+  desired_price: string;
 };
 
 export function SearchResult(props: SearchResultProps) {
-
-  const [addProductMutation, { data, loading, error }] = useAddProductMutation();
+  const [addProductMutation, { data, loading, error }] =
+    useAddProductMutation();
 
   const {
     register,
@@ -27,9 +27,13 @@ export function SearchResult(props: SearchResultProps) {
   const onSubmit: SubmitHandler<AddToTrackListData> = async (formData) => {
     await addProductMutation({
       variables: {
-       input: {product_link: props.product_link, desired_price: parseFloat(formData.desired_price)}
+        input: {
+          product_link: props.product_link,
+          desired_price: parseFloat(formData.desired_price),
+          userId: props.userid,
+        },
       },
-      })
+    });
   };
   return (
     <>
@@ -37,7 +41,7 @@ export function SearchResult(props: SearchResultProps) {
         <div>
           <Image
             src={props.product_image_src || '/trackky_header.png'}
-            width={150}
+            width={200}
             height={200}
             alt='product image'
           />
@@ -69,7 +73,7 @@ export function SearchResult(props: SearchResultProps) {
                     value: 4,
                     message: 'Maximum length is 4 digits.',
                   },
-                  validate: (value) => value < props.original_price,
+                  validate: (value) => parseFloat(value) < props.original_price,
                 })}
               />
 
@@ -77,21 +81,22 @@ export function SearchResult(props: SearchResultProps) {
                 <p className='text-red'>{errors.desired_price.message}</p>
               )}
               <div className='mt-4'>
-                {loading ? <div className = 'w-full text-center h-10 rounded-md bg-indigo-400 text-grey hover:bg-indigo text-lg font-bold'><p className='m-auto'>Loading...</p></div> :<button
-                  disabled={!isDirty || !isValid}
-                  className='w-full text-center h-10 rounded-md bg-indigo-400 text-grey hover:bg-indigo disabled:opacity-50 text-lg font-bold'
-                  type='submit'
-                >
-                  Add to Track List
-                </button>}
-                
+                {loading ? (
+                  <div className='w-full text-center h-10 rounded-md bg-indigo-400 text-grey hover:bg-indigo text-lg font-bold'>
+                    <p className='m-auto'>Loading...</p>
+                  </div>
+                ) : (
+                  <button
+                    disabled={!isDirty || !isValid}
+                    className='w-full text-center h-10 rounded-md bg-indigo-400 text-grey hover:bg-indigo disabled:opacity-50 text-lg font-bold'
+                    type='submit'
+                  >
+                    Add to Track List
+                  </button>
+                )}
               </div>
-              {error && (
-              <p className='text-red'>{error.message}</p>
-            )}
-            {data && (
-              <p >Congrats! Your product is added successfully.</p>
-            )}
+              {error && <p className='text-red'>{error.message}</p>}
+              {data && <p>Congrats! Your product is added successfully.</p>}
             </form>
           </div>
         </div>

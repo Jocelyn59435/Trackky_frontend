@@ -2,6 +2,7 @@ import React from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import Header from '../../../src/components/Header';
+import { FilterSection } from '../../../src/components/FilterSection';
 import SearchForm from '../../../src/components/SearchForm';
 import { useAuth } from '../../../lib/useAuth';
 import jwtDecode from 'jwt-decode';
@@ -39,6 +40,15 @@ export default function LandingPage() {
         </div>
         <div>
           <SearchForm userId={userid as string} />
+        </div>
+        <div className='w-5/6 m-auto'>
+          <hr className='m-auto border-0 bg-gray-300 text-gray-500 h-px my-10' />
+          <div className='text-center py-5'>
+            <span className=' text-indigo font-black font-sans text-3xl pl-5'>
+              Your Track List
+            </span>
+          </div>
+          <FilterSection userId={userid.toString()} />
         </div>
       </>
     );

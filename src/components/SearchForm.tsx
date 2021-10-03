@@ -67,7 +67,7 @@ export default function SearchForm(props: SearchFormProps) {
                   className='w-full
            h-10 rounded-md bg-indigo-400 text-grey hover:bg-indigo text-lg text-center font-bold items-center align-middle'
                 >
-                  <span className= 'm-auto'>Fetching ...</span>
+                  <span className='m-auto'>Fetching ...</span>
                 </div>
               ) : (
                 <input

@@ -1,13 +1,11 @@
-query getProductByUserId($userId: Float!) {
-  getProductByUserId(userId: $userId) {
+query getProductByUserId($userId: String!, $status: String!) {
+  getProductByUserId(userId: $userId, status: $status) {
     product_name
     product_link
     product_image_src
     original_price
     current_price
     desired_price
-    price_update_time
-    email_sent_time
     status
     user_id
   }

@@ -20,6 +20,7 @@ export type Scalars = {
 export type AddProductPayload = {
   desired_price: Scalars['Float'];
   product_link: Scalars['String'];
+  userId: Scalars['String'];
 };
 
 export type AuthResponse = {
@@ -126,7 +127,8 @@ export type QueryCheckSecureCodeArgs = {
 
 
 export type QueryGetProductByUserIdArgs = {
-  userId: Scalars['Float'];
+  status: Scalars['String'];
+  userId: Scalars['String'];
 };
 
 
@@ -422,16 +424,14 @@ export type CheckSecureCodeQueryHookResult = ReturnType<typeof useCheckSecureCod
 export type CheckSecureCodeLazyQueryHookResult = ReturnType<typeof useCheckSecureCodeLazyQuery>;
 export type CheckSecureCodeQueryResult = Apollo.QueryResult<CheckSecureCodeQuery, CheckSecureCodeQueryVariables>;
 export const GetProductByUserIdDocument = gql`
-    query getProductByUserId($userId: Float!) {
-  getProductByUserId(userId: $userId) {
+    query getProductByUserId($userId: String!, $status: String!) {
+  getProductByUserId(userId: $userId, status: $status) {
     product_name
     product_link
     product_image_src
     original_price
     current_price
     desired_price
-    price_update_time
-    email_sent_time
     status
     user_id
   }
@@ -451,6 +451,7 @@ export const GetProductByUserIdDocument = gql`
  * const { data, loading, error } = useGetProductByUserIdQuery({
  *   variables: {
  *      userId: // value for 'userId'
+ *      status: // value for 'status'
  *   },
  * });
  */
@@ -552,11 +553,12 @@ export type CheckSecureCodeQueryVariables = Exact<{
 export type CheckSecureCodeQuery = { __typename?: 'Query', checkSecureCode: { __typename?: 'CheckSecureCodeResponse', isValidCode: boolean, email: string } };
 
 export type GetProductByUserIdQueryVariables = Exact<{
-  userId: Scalars['Float'];
+  userId: Scalars['String'];
+  status: Scalars['String'];
 }>;
 
 
-export type GetProductByUserIdQuery = { __typename?: 'Query', getProductByUserId: Array<{ __typename?: 'Product', product_name: string, product_link: string, product_image_src: string, original_price: number, current_price: number, desired_price: number, price_update_time: number, email_sent_time: number, status: ProductStatus, user_id: string }> };
+export type GetProductByUserIdQuery = { __typename?: 'Query', getProductByUserId: Array<{ __typename?: 'Product', product_name: string, product_link: string, product_image_src: string, original_price: number, current_price: number, desired_price: number, status: ProductStatus, user_id: string }> };
 
 export type GetUserInfoQueryVariables = Exact<{
   email: Scalars['String'];
