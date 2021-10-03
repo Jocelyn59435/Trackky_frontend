@@ -38,7 +38,6 @@ export function SearchResult(props: SearchResultProps) {
     });
     toggleProductStatus(!state);
   };
-  console.log('State in search result' + state);
   return (
     <>
       <div className='flex w-full align-middle justify-center mt-10 space-x-10'>
@@ -55,9 +54,7 @@ export function SearchResult(props: SearchResultProps) {
             <p className='text-2xl'>{props.product_name}</p>
           </div>
           <div>
-            <p>
-              <span className='font-bold'>Price:&nbsp;</span>
-            </p>
+            <span className='font-bold'>Price:</span>
           </div>
 
           <div className='col-span-3'>
@@ -65,7 +62,7 @@ export function SearchResult(props: SearchResultProps) {
           </div>
 
           <div>
-            <label className='font-bold'>Desired Price:&nbsp;</label>
+            <label className='font-bold'>Desired Price:</label>
           </div>
           <div className='col-span-3'>
             <form onSubmit={handleSubmit(onSubmit)}>

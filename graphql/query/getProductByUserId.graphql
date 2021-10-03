@@ -1,5 +1,6 @@
 query getProductByUserId($userId: String!, $status: String!) {
   getProductByUserId(userId: $userId, status: $status) {
+    id
     product_name
     product_link
     product_image_src

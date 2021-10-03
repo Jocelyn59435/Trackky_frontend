@@ -1,0 +1,13 @@
+mutation updateDesiredPrice(
+  $desired_price: Float!
+  $user_id: String!
+  $id: String!
+) {
+  updateDesiredPrice(
+    desired_price: $desired_price
+    user_id: $user_id
+    id: $id
+  ) {
+    id
+  }
+}

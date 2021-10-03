@@ -50,11 +50,22 @@ export function FilterSection(props: FileterSectionProps) {
           Achieved
         </div>
       </div>
-
-      {data &&
-        data?.getProductByUserId.map((p, index) => (
-          <ProductInfo product_name={p.product_name} key={index} />
-        ))}
+      <div className='mt-20 grid gap-20 lg:grid-cols-3 md:grid-cols-3 sm:grid-cols-2'>
+        {data &&
+          data?.getProductByUserId.map((p) => (
+            <ProductInfo
+              id={p.id}
+              product_name={p.product_name}
+              product_link={p.product_link}
+              product_image_src={p.product_image_src}
+              original_price={p.original_price}
+              current_price={p.current_price}
+              desired_price={p.desired_price}
+              user_id={p.user_id}
+              key={p.id}
+            />
+          ))}
+      </div>
     </div>
   );
 }

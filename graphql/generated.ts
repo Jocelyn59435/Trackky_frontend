@@ -49,11 +49,12 @@ export type CheckSecureCodeResponse = {
 export type Mutation = {
   __typename?: 'Mutation';
   addProduct: Product;
-  deleteProduct: Scalars['Int'];
+  deleteProduct: UpdateProductResponse;
   resetPassword: ResetPasswordResponse;
   resetPasswordRequest: ResetPasswordRequestResponse;
   signIn: AuthResponse;
   signUp: AuthResponse;
+  updateDesiredPrice: UpdateProductResponse;
 };
 
 
@@ -86,6 +87,13 @@ export type MutationSignInArgs = {
 
 export type MutationSignUpArgs = {
   input: SignUpPayload;
+};
+
+
+export type MutationUpdateDesiredPriceArgs = {
+  desired_price: Scalars['Float'];
+  id: Scalars['String'];
+  user_id: Scalars['String'];
 };
 
 /** type definition for product */
@@ -159,6 +167,11 @@ export type SignUpPayload = {
   password: Scalars['String'];
 };
 
+export type UpdateProductResponse = {
+  __typename?: 'UpdateProductResponse';
+  id: Scalars['String'];
+};
+
 /** type definition for user_info */
 export type User_Info = {
   __typename?: 'User_info';
@@ -208,6 +221,40 @@ export function useAddProductMutation(baseOptions?: Apollo.MutationHookOptions<A
 export type AddProductMutationHookResult = ReturnType<typeof useAddProductMutation>;
 export type AddProductMutationResult = Apollo.MutationResult<AddProductMutation>;
 export type AddProductMutationOptions = Apollo.BaseMutationOptions<AddProductMutation, AddProductMutationVariables>;
+export const DeleteProductDocument = gql`
+    mutation deleteProduct($user_id: String!, $id: String!) {
+  deleteProduct(user_id: $user_id, id: $id) {
+    id
+  }
+}
+    `;
+export type DeleteProductMutationFn = Apollo.MutationFunction<DeleteProductMutation, DeleteProductMutationVariables>;
+
+/**
+ * __useDeleteProductMutation__
+ *
+ * To run a mutation, you first call `useDeleteProductMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useDeleteProductMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [deleteProductMutation, { data, loading, error }] = useDeleteProductMutation({
+ *   variables: {
+ *      user_id: // value for 'user_id'
+ *      id: // value for 'id'
+ *   },
+ * });
+ */
+export function useDeleteProductMutation(baseOptions?: Apollo.MutationHookOptions<DeleteProductMutation, DeleteProductMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<DeleteProductMutation, DeleteProductMutationVariables>(DeleteProductDocument, options);
+      }
+export type DeleteProductMutationHookResult = ReturnType<typeof useDeleteProductMutation>;
+export type DeleteProductMutationResult = Apollo.MutationResult<DeleteProductMutation>;
+export type DeleteProductMutationOptions = Apollo.BaseMutationOptions<DeleteProductMutation, DeleteProductMutationVariables>;
 export const ResetPasswordDocument = gql`
     mutation resetPassword($passwordInput: String!, $reset_password_secure_code: String!) {
   resetPassword(
@@ -349,6 +396,41 @@ export function useSignUpMutation(baseOptions?: Apollo.MutationHookOptions<SignU
 export type SignUpMutationHookResult = ReturnType<typeof useSignUpMutation>;
 export type SignUpMutationResult = Apollo.MutationResult<SignUpMutation>;
 export type SignUpMutationOptions = Apollo.BaseMutationOptions<SignUpMutation, SignUpMutationVariables>;
+export const UpdateDesiredPriceDocument = gql`
+    mutation updateDesiredPrice($desired_price: Float!, $user_id: String!, $id: String!) {
+  updateDesiredPrice(desired_price: $desired_price, user_id: $user_id, id: $id) {
+    id
+  }
+}
+    `;
+export type UpdateDesiredPriceMutationFn = Apollo.MutationFunction<UpdateDesiredPriceMutation, UpdateDesiredPriceMutationVariables>;
+
+/**
+ * __useUpdateDesiredPriceMutation__
+ *
+ * To run a mutation, you first call `useUpdateDesiredPriceMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useUpdateDesiredPriceMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [updateDesiredPriceMutation, { data, loading, error }] = useUpdateDesiredPriceMutation({
+ *   variables: {
+ *      desired_price: // value for 'desired_price'
+ *      user_id: // value for 'user_id'
+ *      id: // value for 'id'
+ *   },
+ * });
+ */
+export function useUpdateDesiredPriceMutation(baseOptions?: Apollo.MutationHookOptions<UpdateDesiredPriceMutation, UpdateDesiredPriceMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<UpdateDesiredPriceMutation, UpdateDesiredPriceMutationVariables>(UpdateDesiredPriceDocument, options);
+      }
+export type UpdateDesiredPriceMutationHookResult = ReturnType<typeof useUpdateDesiredPriceMutation>;
+export type UpdateDesiredPriceMutationResult = Apollo.MutationResult<UpdateDesiredPriceMutation>;
+export type UpdateDesiredPriceMutationOptions = Apollo.BaseMutationOptions<UpdateDesiredPriceMutation, UpdateDesiredPriceMutationVariables>;
 export const CheckProductPriceByUrlDocument = gql`
     query checkProductPriceByUrl($url: String!) {
   checkProductPriceByUrl(url: $url) {
@@ -426,6 +508,7 @@ export type CheckSecureCodeQueryResult = Apollo.QueryResult<CheckSecureCodeQuery
 export const GetProductByUserIdDocument = gql`
     query getProductByUserId($userId: String!, $status: String!) {
   getProductByUserId(userId: $userId, status: $status) {
+    id
     product_name
     product_link
     product_image_src
@@ -509,6 +592,14 @@ export type AddProductMutationVariables = Exact<{
 
 export type AddProductMutation = { __typename?: 'Mutation', addProduct: { __typename?: 'Product', id: string, product_name: string } };
 
+export type DeleteProductMutationVariables = Exact<{
+  user_id: Scalars['String'];
+  id: Scalars['String'];
+}>;
+
+
+export type DeleteProductMutation = { __typename?: 'Mutation', deleteProduct: { __typename?: 'UpdateProductResponse', id: string } };
+
 export type ResetPasswordMutationVariables = Exact<{
   passwordInput: Scalars['String'];
   reset_password_secure_code: Scalars['String'];
@@ -538,6 +629,15 @@ export type SignUpMutationVariables = Exact<{
 
 export type SignUpMutation = { __typename?: 'Mutation', signUp: { __typename?: 'AuthResponse', email: string, token: string, id: number } };
 
+export type UpdateDesiredPriceMutationVariables = Exact<{
+  desired_price: Scalars['Float'];
+  user_id: Scalars['String'];
+  id: Scalars['String'];
+}>;
+
+
+export type UpdateDesiredPriceMutation = { __typename?: 'Mutation', updateDesiredPrice: { __typename?: 'UpdateProductResponse', id: string } };
+
 export type CheckProductPriceByUrlQueryVariables = Exact<{
   url: Scalars['String'];
 }>;
@@ -558,7 +658,7 @@ export type GetProductByUserIdQueryVariables = Exact<{
 }>;
 
 
-export type GetProductByUserIdQuery = { __typename?: 'Query', getProductByUserId: Array<{ __typename?: 'Product', product_name: string, product_link: string, product_image_src: string, original_price: number, current_price: number, desired_price: number, status: ProductStatus, user_id: string }> };
+export type GetProductByUserIdQuery = { __typename?: 'Query', getProductByUserId: Array<{ __typename?: 'Product', id: string, product_name: string, product_link: string, product_image_src: string, original_price: number, current_price: number, desired_price: number, status: ProductStatus, user_id: string }> };
 
 export type GetUserInfoQueryVariables = Exact<{
   email: Scalars['String'];
