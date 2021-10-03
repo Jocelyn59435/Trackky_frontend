@@ -1,6 +1,8 @@
 import Image from 'next/dist/client/image';
 import { useForm, SubmitHandler } from 'react-hook-form';
 import { useAddProductMutation } from '../../graphql/generated';
+import { useReactiveVar } from '@apollo/client';
+import { toggleProductStatus } from '../../lib/toggleProductStatus';
 
 type SearchResultProps = {
   userid: string;
@@ -17,7 +19,7 @@ type AddToTrackListData = {
 export function SearchResult(props: SearchResultProps) {
   const [addProductMutation, { data, loading, error }] =
     useAddProductMutation();
-
+  const state = useReactiveVar(toggleProductStatus);
   const {
     register,
     formState: { errors, isValid, isDirty },
@@ -34,7 +36,9 @@ export function SearchResult(props: SearchResultProps) {
         },
       },
     });
+    toggleProductStatus(!state);
   };
+  console.log('State in search result' + state);
   return (
     <>
       <div className='flex w-full align-middle justify-center mt-10 space-x-10'>

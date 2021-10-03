@@ -1,6 +1,8 @@
 import { useEffect, useState } from 'react';
 import { useGetProductByUserIdLazyQuery } from '../../graphql/generated';
 import { ProductInfo } from './ProductInfo';
+import { useReactiveVar } from '@apollo/client';
+import { toggleProductStatus } from '../../lib/toggleProductStatus';
 
 type FileterSectionProps = {
   userId: string;
@@ -15,15 +17,18 @@ export function FilterSection(props: FileterSectionProps) {
       nextFetchPolicy: 'network-only',
     });
 
+  const state = useReactiveVar(toggleProductStatus);
+
   useEffect(() => {
+    console.log('State in useffect filter' + state);
     getProductByUserId({
       variables: {
         userId: props.userId,
         status: activeClicked ? 'active' : 'achieved',
       },
     });
-  }, [activeClicked]);
-
+  }, [activeClicked, state]);
+  console.log('State in fileter section' + state);
   const unclickedStyle =
     'w-1/4 text-center border-0 border-indigo text-indigo font-bold text-lg hover:bg-indigo hover:text-grey';
   const clickedStyle =

@@ -1,8 +1,9 @@
 import { ApolloClient, HttpLink, InMemoryCache } from '@apollo/client';
+import { cacheForLocalState } from './cacheForLocalState';
 
 export const useApollo = (token: string | undefined) =>
   new ApolloClient({
-    cache: new InMemoryCache(),
+    cache: cacheForLocalState,
     // link: authLink.concat(httpLink),
     link: new HttpLink({
       // uri: 'https://trackkybackend.herokuapp.com/graphql',
