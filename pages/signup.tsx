@@ -2,6 +2,7 @@ import React, { useRef, useState } from 'react';
 import { useForm, SubmitHandler } from 'react-hook-form';
 import { useSignUpMutation } from '../graphql/generated';
 import { useAuth } from '../lib/useAuth';
+import { useRouter } from 'next/router';
 import { motion } from 'framer-motion';
 import Header from '../src/components/Header';
 
@@ -14,6 +15,8 @@ type SignUpFormData = {
 };
 
 export default function SignUp() {
+  const router = useRouter();
+
   const {
     register,
     formState: { errors, isValid, isDirty },
@@ -49,7 +52,7 @@ export default function SignUp() {
       if (result.data) {
         const { setToken } = useAuth();
         setToken(result.data.signUp.token);
-        window.location.href = `/users/${result.data.signUp.id}/landingpage`;
+        router.push(`/users/${result.data.signUp.id}/landingpage`);
       }
     } catch (e) {
       setShowError(e.message);
