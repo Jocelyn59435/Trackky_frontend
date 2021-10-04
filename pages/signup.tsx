@@ -13,7 +13,7 @@ type SignUpFormData = {
   passwordToConfirm: string;
 };
 
-export default function signUpComponent() {
+export default function SignUp() {
   const {
     register,
     formState: { errors, isValid, isDirty },

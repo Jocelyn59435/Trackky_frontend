@@ -8,7 +8,7 @@ type ResetPasswordRequestFormData = {
   email: string;
 };
 
-export default function ResetPasswordRequestComponent() {
+export default function ResetPasswordRequest() {
   const {
     register,
     formState: { errors, isValid, isDirty },

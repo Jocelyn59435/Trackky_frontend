@@ -12,7 +12,7 @@ type SignInFormData = {
   password: string;
 };
 
-export default function signInComponent() {
+export default function SignIn() {
   const router = useRouter();
   const {
     register,

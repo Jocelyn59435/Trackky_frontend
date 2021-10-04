@@ -14,7 +14,7 @@ type ResetPasswordFormData = {
   passwordToConfirm: string;
 };
 
-export default function ResetPasswordPage() {
+export default function ResetPage() {
   const {
     register,
     formState: { errors, isValid, isDirty },
