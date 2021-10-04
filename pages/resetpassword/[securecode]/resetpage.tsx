@@ -121,7 +121,7 @@ export default function ResetPage() {
                 className='w-full h-10 rounded-md bg-indigo-400 text-grey hover:bg-indigo disabled:opacity-50 text-lg font-bold'
               />
             </motion.div>
-            {resetError && <p className='text-red'>{showResetError}</p>}
+            {resetError && <p className='text-red m-8'>{showResetError}</p>}
             {resetData?.resetPassword?.email && (
               <p>
                 {`Congrats! Your password for ${resetData?.resetPassword?.email}

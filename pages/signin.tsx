@@ -74,7 +74,11 @@ export default function SignIn() {
             <input
               type='password'
               className='w-full border-darkgrey border-2 rounded-lg h-10 hover:border-indigo focus:bg-transparent'
-              {...register('password', { required: true, maxLength: 15 })}
+              {...register('password', {
+                required: 'This is required.',
+                maxLength: { value: 15, message: 'Max input length is 15.' },
+                minLength: { value: 8, message: 'Min input length is 8.' },
+              })}
             />
           </div>
           <div></div>

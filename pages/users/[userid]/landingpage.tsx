@@ -32,7 +32,7 @@ export default function LandingPage() {
   if (token && sameRoute) {
     return (
       <>
-        <Header notSignedIn={false} />
+        <Header notSignedIn={false} isLandingPage={true} />
         <div className='text-center py-5'>
           <span className=' text-indigo font-black font-sans text-3xl pl-5'>
             Fetch the Price
@@ -56,13 +56,13 @@ export default function LandingPage() {
     return (
       <>
         <Header notSignedIn={true} />
-        <span className='ml-10 mt-10'>
+        <div className='m-8 text-2xl'>
           You are not authorized, please&nbsp;
           <Link href='/signin'>
             <a className='font-bold hover:underline'>sign in&nbsp;</a>
           </Link>
           first.
-        </span>
+        </div>
       </>
     );
   }
