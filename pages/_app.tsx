@@ -1,4 +1,5 @@
 import 'tailwindcss/tailwind.css';
+import '../public/styles.css';
 import { ApolloProvider } from '@apollo/client';
 import { useApollo } from '../lib/useApollo';
 import { useAuth } from '../lib/useAuth';

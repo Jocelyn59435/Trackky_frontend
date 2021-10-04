@@ -2,10 +2,16 @@
 import { gql } from '@apollo/client';
 import * as Apollo from '@apollo/client';
 export type Maybe<T> = T | null;
-export type Exact<T extends { [key: string]: unknown }> = { [K in keyof T]: T[K] };
-export type MakeOptional<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]?: Maybe<T[SubKey]> };
-export type MakeMaybe<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]: Maybe<T[SubKey]> };
-const defaultOptions =  {}
+export type Exact<T extends { [key: string]: unknown }> = {
+  [K in keyof T]: T[K];
+};
+export type MakeOptional<T, K extends keyof T> = Omit<T, K> & {
+  [SubKey in K]?: Maybe<T[SubKey]>;
+};
+export type MakeMaybe<T, K extends keyof T> = Omit<T, K> & {
+  [SubKey in K]: Maybe<T[SubKey]>;
+};
+const defaultOptions = {};
 /** All built-in and custom scalars, mapped to their actual values */
 export type Scalars = {
   ID: string;
@@ -57,38 +63,31 @@ export type Mutation = {
   updateDesiredPrice: UpdateProductResponse;
 };
 
-
 export type MutationAddProductArgs = {
   input: AddProductPayload;
 };
-
 
 export type MutationDeleteProductArgs = {
   id: Scalars['String'];
   user_id: Scalars['String'];
 };
 
-
 export type MutationResetPasswordArgs = {
   passwordInput: Scalars['String'];
   reset_password_secure_code: Scalars['String'];
 };
 
-
 export type MutationResetPasswordRequestArgs = {
   email: Scalars['String'];
 };
-
 
 export type MutationSignInArgs = {
   input: SignInPayload;
 };
 
-
 export type MutationSignUpArgs = {
   input: SignUpPayload;
 };
-
 
 export type MutationUpdateDesiredPriceArgs = {
   desired_price: Scalars['Float'];
@@ -123,22 +122,18 @@ export type Query = {
   getUserInfo: User_Info;
 };
 
-
 export type QueryCheckProductPriceByUrlArgs = {
   url: Scalars['String'];
 };
-
 
 export type QueryCheckSecureCodeArgs = {
   reset_password_secure_code: Scalars['String'];
 };
 
-
 export type QueryGetProductByUserIdArgs = {
   status: Scalars['String'];
   userId: Scalars['String'];
 };
-
 
 export type QueryGetUserInfoArgs = {
   email: Scalars['String'];
@@ -183,19 +178,21 @@ export type User_Info = {
 
 export enum ProductStatus {
   Active = 'active',
-  Finished = 'finished'
+  Finished = 'finished',
 }
-
 
 export const AddProductDocument = gql`
-    mutation addProduct($input: AddProductPayload!) {
-  addProduct(input: $input) {
-    id
-    product_name
+  mutation addProduct($input: AddProductPayload!) {
+    addProduct(input: $input) {
+      id
+      product_name
+    }
   }
-}
-    `;
-export type AddProductMutationFn = Apollo.MutationFunction<AddProductMutation, AddProductMutationVariables>;
+`;
+export type AddProductMutationFn = Apollo.MutationFunction<
+  AddProductMutation,
+  AddProductMutationVariables
+>;
 
 /**
  * __useAddProductMutation__
@@ -214,21 +211,38 @@ export type AddProductMutationFn = Apollo.MutationFunction<AddProductMutation, A
  *   },
  * });
  */
-export function useAddProductMutation(baseOptions?: Apollo.MutationHookOptions<AddProductMutation, AddProductMutationVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useMutation<AddProductMutation, AddProductMutationVariables>(AddProductDocument, options);
-      }
-export type AddProductMutationHookResult = ReturnType<typeof useAddProductMutation>;
-export type AddProductMutationResult = Apollo.MutationResult<AddProductMutation>;
-export type AddProductMutationOptions = Apollo.BaseMutationOptions<AddProductMutation, AddProductMutationVariables>;
-export const DeleteProductDocument = gql`
-    mutation deleteProduct($user_id: String!, $id: String!) {
-  deleteProduct(user_id: $user_id, id: $id) {
-    id
-  }
+export function useAddProductMutation(
+  baseOptions?: Apollo.MutationHookOptions<
+    AddProductMutation,
+    AddProductMutationVariables
+  >
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useMutation<AddProductMutation, AddProductMutationVariables>(
+    AddProductDocument,
+    options
+  );
 }
-    `;
-export type DeleteProductMutationFn = Apollo.MutationFunction<DeleteProductMutation, DeleteProductMutationVariables>;
+export type AddProductMutationHookResult = ReturnType<
+  typeof useAddProductMutation
+>;
+export type AddProductMutationResult =
+  Apollo.MutationResult<AddProductMutation>;
+export type AddProductMutationOptions = Apollo.BaseMutationOptions<
+  AddProductMutation,
+  AddProductMutationVariables
+>;
+export const DeleteProductDocument = gql`
+  mutation deleteProduct($user_id: String!, $id: String!) {
+    deleteProduct(user_id: $user_id, id: $id) {
+      id
+    }
+  }
+`;
+export type DeleteProductMutationFn = Apollo.MutationFunction<
+  DeleteProductMutation,
+  DeleteProductMutationVariables
+>;
 
 /**
  * __useDeleteProductMutation__
@@ -248,25 +262,45 @@ export type DeleteProductMutationFn = Apollo.MutationFunction<DeleteProductMutat
  *   },
  * });
  */
-export function useDeleteProductMutation(baseOptions?: Apollo.MutationHookOptions<DeleteProductMutation, DeleteProductMutationVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useMutation<DeleteProductMutation, DeleteProductMutationVariables>(DeleteProductDocument, options);
-      }
-export type DeleteProductMutationHookResult = ReturnType<typeof useDeleteProductMutation>;
-export type DeleteProductMutationResult = Apollo.MutationResult<DeleteProductMutation>;
-export type DeleteProductMutationOptions = Apollo.BaseMutationOptions<DeleteProductMutation, DeleteProductMutationVariables>;
-export const ResetPasswordDocument = gql`
-    mutation resetPassword($passwordInput: String!, $reset_password_secure_code: String!) {
-  resetPassword(
-    passwordInput: $passwordInput
-    reset_password_secure_code: $reset_password_secure_code
-  ) {
-    email
-    id
-  }
+export function useDeleteProductMutation(
+  baseOptions?: Apollo.MutationHookOptions<
+    DeleteProductMutation,
+    DeleteProductMutationVariables
+  >
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useMutation<
+    DeleteProductMutation,
+    DeleteProductMutationVariables
+  >(DeleteProductDocument, options);
 }
-    `;
-export type ResetPasswordMutationFn = Apollo.MutationFunction<ResetPasswordMutation, ResetPasswordMutationVariables>;
+export type DeleteProductMutationHookResult = ReturnType<
+  typeof useDeleteProductMutation
+>;
+export type DeleteProductMutationResult =
+  Apollo.MutationResult<DeleteProductMutation>;
+export type DeleteProductMutationOptions = Apollo.BaseMutationOptions<
+  DeleteProductMutation,
+  DeleteProductMutationVariables
+>;
+export const ResetPasswordDocument = gql`
+  mutation resetPassword(
+    $passwordInput: String!
+    $reset_password_secure_code: String!
+  ) {
+    resetPassword(
+      passwordInput: $passwordInput
+      reset_password_secure_code: $reset_password_secure_code
+    ) {
+      email
+      id
+    }
+  }
+`;
+export type ResetPasswordMutationFn = Apollo.MutationFunction<
+  ResetPasswordMutation,
+  ResetPasswordMutationVariables
+>;
 
 /**
  * __useResetPasswordMutation__
@@ -286,21 +320,38 @@ export type ResetPasswordMutationFn = Apollo.MutationFunction<ResetPasswordMutat
  *   },
  * });
  */
-export function useResetPasswordMutation(baseOptions?: Apollo.MutationHookOptions<ResetPasswordMutation, ResetPasswordMutationVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useMutation<ResetPasswordMutation, ResetPasswordMutationVariables>(ResetPasswordDocument, options);
-      }
-export type ResetPasswordMutationHookResult = ReturnType<typeof useResetPasswordMutation>;
-export type ResetPasswordMutationResult = Apollo.MutationResult<ResetPasswordMutation>;
-export type ResetPasswordMutationOptions = Apollo.BaseMutationOptions<ResetPasswordMutation, ResetPasswordMutationVariables>;
-export const ResetPasswordRequestDocument = gql`
-    mutation resetPasswordRequest($email: String!) {
-  resetPasswordRequest(email: $email) {
-    id
-  }
+export function useResetPasswordMutation(
+  baseOptions?: Apollo.MutationHookOptions<
+    ResetPasswordMutation,
+    ResetPasswordMutationVariables
+  >
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useMutation<
+    ResetPasswordMutation,
+    ResetPasswordMutationVariables
+  >(ResetPasswordDocument, options);
 }
-    `;
-export type ResetPasswordRequestMutationFn = Apollo.MutationFunction<ResetPasswordRequestMutation, ResetPasswordRequestMutationVariables>;
+export type ResetPasswordMutationHookResult = ReturnType<
+  typeof useResetPasswordMutation
+>;
+export type ResetPasswordMutationResult =
+  Apollo.MutationResult<ResetPasswordMutation>;
+export type ResetPasswordMutationOptions = Apollo.BaseMutationOptions<
+  ResetPasswordMutation,
+  ResetPasswordMutationVariables
+>;
+export const ResetPasswordRequestDocument = gql`
+  mutation resetPasswordRequest($email: String!) {
+    resetPasswordRequest(email: $email) {
+      id
+    }
+  }
+`;
+export type ResetPasswordRequestMutationFn = Apollo.MutationFunction<
+  ResetPasswordRequestMutation,
+  ResetPasswordRequestMutationVariables
+>;
 
 /**
  * __useResetPasswordRequestMutation__
@@ -319,23 +370,40 @@ export type ResetPasswordRequestMutationFn = Apollo.MutationFunction<ResetPasswo
  *   },
  * });
  */
-export function useResetPasswordRequestMutation(baseOptions?: Apollo.MutationHookOptions<ResetPasswordRequestMutation, ResetPasswordRequestMutationVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useMutation<ResetPasswordRequestMutation, ResetPasswordRequestMutationVariables>(ResetPasswordRequestDocument, options);
-      }
-export type ResetPasswordRequestMutationHookResult = ReturnType<typeof useResetPasswordRequestMutation>;
-export type ResetPasswordRequestMutationResult = Apollo.MutationResult<ResetPasswordRequestMutation>;
-export type ResetPasswordRequestMutationOptions = Apollo.BaseMutationOptions<ResetPasswordRequestMutation, ResetPasswordRequestMutationVariables>;
-export const SignInDocument = gql`
-    mutation signIn($input: SignInPayload!) {
-  signIn(input: $input) {
-    email
-    token
-    id
-  }
+export function useResetPasswordRequestMutation(
+  baseOptions?: Apollo.MutationHookOptions<
+    ResetPasswordRequestMutation,
+    ResetPasswordRequestMutationVariables
+  >
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useMutation<
+    ResetPasswordRequestMutation,
+    ResetPasswordRequestMutationVariables
+  >(ResetPasswordRequestDocument, options);
 }
-    `;
-export type SignInMutationFn = Apollo.MutationFunction<SignInMutation, SignInMutationVariables>;
+export type ResetPasswordRequestMutationHookResult = ReturnType<
+  typeof useResetPasswordRequestMutation
+>;
+export type ResetPasswordRequestMutationResult =
+  Apollo.MutationResult<ResetPasswordRequestMutation>;
+export type ResetPasswordRequestMutationOptions = Apollo.BaseMutationOptions<
+  ResetPasswordRequestMutation,
+  ResetPasswordRequestMutationVariables
+>;
+export const SignInDocument = gql`
+  mutation signIn($input: SignInPayload!) {
+    signIn(input: $input) {
+      email
+      token
+      id
+    }
+  }
+`;
+export type SignInMutationFn = Apollo.MutationFunction<
+  SignInMutation,
+  SignInMutationVariables
+>;
 
 /**
  * __useSignInMutation__
@@ -354,23 +422,37 @@ export type SignInMutationFn = Apollo.MutationFunction<SignInMutation, SignInMut
  *   },
  * });
  */
-export function useSignInMutation(baseOptions?: Apollo.MutationHookOptions<SignInMutation, SignInMutationVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useMutation<SignInMutation, SignInMutationVariables>(SignInDocument, options);
-      }
+export function useSignInMutation(
+  baseOptions?: Apollo.MutationHookOptions<
+    SignInMutation,
+    SignInMutationVariables
+  >
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useMutation<SignInMutation, SignInMutationVariables>(
+    SignInDocument,
+    options
+  );
+}
 export type SignInMutationHookResult = ReturnType<typeof useSignInMutation>;
 export type SignInMutationResult = Apollo.MutationResult<SignInMutation>;
-export type SignInMutationOptions = Apollo.BaseMutationOptions<SignInMutation, SignInMutationVariables>;
+export type SignInMutationOptions = Apollo.BaseMutationOptions<
+  SignInMutation,
+  SignInMutationVariables
+>;
 export const SignUpDocument = gql`
-    mutation signUp($input: SignUpPayload!) {
-  signUp(input: $input) {
-    email
-    token
-    id
+  mutation signUp($input: SignUpPayload!) {
+    signUp(input: $input) {
+      email
+      token
+      id
+    }
   }
-}
-    `;
-export type SignUpMutationFn = Apollo.MutationFunction<SignUpMutation, SignUpMutationVariables>;
+`;
+export type SignUpMutationFn = Apollo.MutationFunction<
+  SignUpMutation,
+  SignUpMutationVariables
+>;
 
 /**
  * __useSignUpMutation__
@@ -389,21 +471,43 @@ export type SignUpMutationFn = Apollo.MutationFunction<SignUpMutation, SignUpMut
  *   },
  * });
  */
-export function useSignUpMutation(baseOptions?: Apollo.MutationHookOptions<SignUpMutation, SignUpMutationVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useMutation<SignUpMutation, SignUpMutationVariables>(SignUpDocument, options);
-      }
+export function useSignUpMutation(
+  baseOptions?: Apollo.MutationHookOptions<
+    SignUpMutation,
+    SignUpMutationVariables
+  >
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useMutation<SignUpMutation, SignUpMutationVariables>(
+    SignUpDocument,
+    options
+  );
+}
 export type SignUpMutationHookResult = ReturnType<typeof useSignUpMutation>;
 export type SignUpMutationResult = Apollo.MutationResult<SignUpMutation>;
-export type SignUpMutationOptions = Apollo.BaseMutationOptions<SignUpMutation, SignUpMutationVariables>;
+export type SignUpMutationOptions = Apollo.BaseMutationOptions<
+  SignUpMutation,
+  SignUpMutationVariables
+>;
 export const UpdateDesiredPriceDocument = gql`
-    mutation updateDesiredPrice($desired_price: Float!, $user_id: String!, $id: String!) {
-  updateDesiredPrice(desired_price: $desired_price, user_id: $user_id, id: $id) {
-    id
+  mutation updateDesiredPrice(
+    $desired_price: Float!
+    $user_id: String!
+    $id: String!
+  ) {
+    updateDesiredPrice(
+      desired_price: $desired_price
+      user_id: $user_id
+      id: $id
+    ) {
+      id
+    }
   }
-}
-    `;
-export type UpdateDesiredPriceMutationFn = Apollo.MutationFunction<UpdateDesiredPriceMutation, UpdateDesiredPriceMutationVariables>;
+`;
+export type UpdateDesiredPriceMutationFn = Apollo.MutationFunction<
+  UpdateDesiredPriceMutation,
+  UpdateDesiredPriceMutationVariables
+>;
 
 /**
  * __useUpdateDesiredPriceMutation__
@@ -424,23 +528,37 @@ export type UpdateDesiredPriceMutationFn = Apollo.MutationFunction<UpdateDesired
  *   },
  * });
  */
-export function useUpdateDesiredPriceMutation(baseOptions?: Apollo.MutationHookOptions<UpdateDesiredPriceMutation, UpdateDesiredPriceMutationVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useMutation<UpdateDesiredPriceMutation, UpdateDesiredPriceMutationVariables>(UpdateDesiredPriceDocument, options);
-      }
-export type UpdateDesiredPriceMutationHookResult = ReturnType<typeof useUpdateDesiredPriceMutation>;
-export type UpdateDesiredPriceMutationResult = Apollo.MutationResult<UpdateDesiredPriceMutation>;
-export type UpdateDesiredPriceMutationOptions = Apollo.BaseMutationOptions<UpdateDesiredPriceMutation, UpdateDesiredPriceMutationVariables>;
-export const CheckProductPriceByUrlDocument = gql`
-    query checkProductPriceByUrl($url: String!) {
-  checkProductPriceByUrl(url: $url) {
-    product_name
-    product_link
-    product_image_src
-    original_price
-  }
+export function useUpdateDesiredPriceMutation(
+  baseOptions?: Apollo.MutationHookOptions<
+    UpdateDesiredPriceMutation,
+    UpdateDesiredPriceMutationVariables
+  >
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useMutation<
+    UpdateDesiredPriceMutation,
+    UpdateDesiredPriceMutationVariables
+  >(UpdateDesiredPriceDocument, options);
 }
-    `;
+export type UpdateDesiredPriceMutationHookResult = ReturnType<
+  typeof useUpdateDesiredPriceMutation
+>;
+export type UpdateDesiredPriceMutationResult =
+  Apollo.MutationResult<UpdateDesiredPriceMutation>;
+export type UpdateDesiredPriceMutationOptions = Apollo.BaseMutationOptions<
+  UpdateDesiredPriceMutation,
+  UpdateDesiredPriceMutationVariables
+>;
+export const CheckProductPriceByUrlDocument = gql`
+  query checkProductPriceByUrl($url: String!) {
+    checkProductPriceByUrl(url: $url) {
+      product_name
+      product_link
+      product_image_src
+      original_price
+    }
+  }
+`;
 
 /**
  * __useCheckProductPriceByUrlQuery__
@@ -458,25 +576,48 @@ export const CheckProductPriceByUrlDocument = gql`
  *   },
  * });
  */
-export function useCheckProductPriceByUrlQuery(baseOptions: Apollo.QueryHookOptions<CheckProductPriceByUrlQuery, CheckProductPriceByUrlQueryVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useQuery<CheckProductPriceByUrlQuery, CheckProductPriceByUrlQueryVariables>(CheckProductPriceByUrlDocument, options);
-      }
-export function useCheckProductPriceByUrlLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<CheckProductPriceByUrlQuery, CheckProductPriceByUrlQueryVariables>) {
-          const options = {...defaultOptions, ...baseOptions}
-          return Apollo.useLazyQuery<CheckProductPriceByUrlQuery, CheckProductPriceByUrlQueryVariables>(CheckProductPriceByUrlDocument, options);
-        }
-export type CheckProductPriceByUrlQueryHookResult = ReturnType<typeof useCheckProductPriceByUrlQuery>;
-export type CheckProductPriceByUrlLazyQueryHookResult = ReturnType<typeof useCheckProductPriceByUrlLazyQuery>;
-export type CheckProductPriceByUrlQueryResult = Apollo.QueryResult<CheckProductPriceByUrlQuery, CheckProductPriceByUrlQueryVariables>;
-export const CheckSecureCodeDocument = gql`
-    query checkSecureCode($reset_password_secure_code: String!) {
-  checkSecureCode(reset_password_secure_code: $reset_password_secure_code) {
-    isValidCode
-    email
-  }
+export function useCheckProductPriceByUrlQuery(
+  baseOptions: Apollo.QueryHookOptions<
+    CheckProductPriceByUrlQuery,
+    CheckProductPriceByUrlQueryVariables
+  >
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useQuery<
+    CheckProductPriceByUrlQuery,
+    CheckProductPriceByUrlQueryVariables
+  >(CheckProductPriceByUrlDocument, options);
 }
-    `;
+export function useCheckProductPriceByUrlLazyQuery(
+  baseOptions?: Apollo.LazyQueryHookOptions<
+    CheckProductPriceByUrlQuery,
+    CheckProductPriceByUrlQueryVariables
+  >
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useLazyQuery<
+    CheckProductPriceByUrlQuery,
+    CheckProductPriceByUrlQueryVariables
+  >(CheckProductPriceByUrlDocument, options);
+}
+export type CheckProductPriceByUrlQueryHookResult = ReturnType<
+  typeof useCheckProductPriceByUrlQuery
+>;
+export type CheckProductPriceByUrlLazyQueryHookResult = ReturnType<
+  typeof useCheckProductPriceByUrlLazyQuery
+>;
+export type CheckProductPriceByUrlQueryResult = Apollo.QueryResult<
+  CheckProductPriceByUrlQuery,
+  CheckProductPriceByUrlQueryVariables
+>;
+export const CheckSecureCodeDocument = gql`
+  query checkSecureCode($reset_password_secure_code: String!) {
+    checkSecureCode(reset_password_secure_code: $reset_password_secure_code) {
+      isValidCode
+      email
+    }
+  }
+`;
 
 /**
  * __useCheckSecureCodeQuery__
@@ -494,32 +635,55 @@ export const CheckSecureCodeDocument = gql`
  *   },
  * });
  */
-export function useCheckSecureCodeQuery(baseOptions: Apollo.QueryHookOptions<CheckSecureCodeQuery, CheckSecureCodeQueryVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useQuery<CheckSecureCodeQuery, CheckSecureCodeQueryVariables>(CheckSecureCodeDocument, options);
-      }
-export function useCheckSecureCodeLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<CheckSecureCodeQuery, CheckSecureCodeQueryVariables>) {
-          const options = {...defaultOptions, ...baseOptions}
-          return Apollo.useLazyQuery<CheckSecureCodeQuery, CheckSecureCodeQueryVariables>(CheckSecureCodeDocument, options);
-        }
-export type CheckSecureCodeQueryHookResult = ReturnType<typeof useCheckSecureCodeQuery>;
-export type CheckSecureCodeLazyQueryHookResult = ReturnType<typeof useCheckSecureCodeLazyQuery>;
-export type CheckSecureCodeQueryResult = Apollo.QueryResult<CheckSecureCodeQuery, CheckSecureCodeQueryVariables>;
-export const GetProductByUserIdDocument = gql`
-    query getProductByUserId($userId: String!, $status: String!) {
-  getProductByUserId(userId: $userId, status: $status) {
-    id
-    product_name
-    product_link
-    product_image_src
-    original_price
-    current_price
-    desired_price
-    status
-    user_id
-  }
+export function useCheckSecureCodeQuery(
+  baseOptions: Apollo.QueryHookOptions<
+    CheckSecureCodeQuery,
+    CheckSecureCodeQueryVariables
+  >
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useQuery<CheckSecureCodeQuery, CheckSecureCodeQueryVariables>(
+    CheckSecureCodeDocument,
+    options
+  );
 }
-    `;
+export function useCheckSecureCodeLazyQuery(
+  baseOptions?: Apollo.LazyQueryHookOptions<
+    CheckSecureCodeQuery,
+    CheckSecureCodeQueryVariables
+  >
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useLazyQuery<
+    CheckSecureCodeQuery,
+    CheckSecureCodeQueryVariables
+  >(CheckSecureCodeDocument, options);
+}
+export type CheckSecureCodeQueryHookResult = ReturnType<
+  typeof useCheckSecureCodeQuery
+>;
+export type CheckSecureCodeLazyQueryHookResult = ReturnType<
+  typeof useCheckSecureCodeLazyQuery
+>;
+export type CheckSecureCodeQueryResult = Apollo.QueryResult<
+  CheckSecureCodeQuery,
+  CheckSecureCodeQueryVariables
+>;
+export const GetProductByUserIdDocument = gql`
+  query getProductByUserId($userId: String!, $status: String!) {
+    getProductByUserId(userId: $userId, status: $status) {
+      id
+      product_name
+      product_link
+      product_image_src
+      original_price
+      current_price
+      desired_price
+      status
+      user_id
+    }
+  }
+`;
 
 /**
  * __useGetProductByUserIdQuery__
@@ -538,25 +702,48 @@ export const GetProductByUserIdDocument = gql`
  *   },
  * });
  */
-export function useGetProductByUserIdQuery(baseOptions: Apollo.QueryHookOptions<GetProductByUserIdQuery, GetProductByUserIdQueryVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useQuery<GetProductByUserIdQuery, GetProductByUserIdQueryVariables>(GetProductByUserIdDocument, options);
-      }
-export function useGetProductByUserIdLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetProductByUserIdQuery, GetProductByUserIdQueryVariables>) {
-          const options = {...defaultOptions, ...baseOptions}
-          return Apollo.useLazyQuery<GetProductByUserIdQuery, GetProductByUserIdQueryVariables>(GetProductByUserIdDocument, options);
-        }
-export type GetProductByUserIdQueryHookResult = ReturnType<typeof useGetProductByUserIdQuery>;
-export type GetProductByUserIdLazyQueryHookResult = ReturnType<typeof useGetProductByUserIdLazyQuery>;
-export type GetProductByUserIdQueryResult = Apollo.QueryResult<GetProductByUserIdQuery, GetProductByUserIdQueryVariables>;
-export const GetUserInfoDocument = gql`
-    query getUserInfo($email: String!) {
-  getUserInfo(email: $email) {
-    id
-    created_at
-  }
+export function useGetProductByUserIdQuery(
+  baseOptions: Apollo.QueryHookOptions<
+    GetProductByUserIdQuery,
+    GetProductByUserIdQueryVariables
+  >
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useQuery<
+    GetProductByUserIdQuery,
+    GetProductByUserIdQueryVariables
+  >(GetProductByUserIdDocument, options);
 }
-    `;
+export function useGetProductByUserIdLazyQuery(
+  baseOptions?: Apollo.LazyQueryHookOptions<
+    GetProductByUserIdQuery,
+    GetProductByUserIdQueryVariables
+  >
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useLazyQuery<
+    GetProductByUserIdQuery,
+    GetProductByUserIdQueryVariables
+  >(GetProductByUserIdDocument, options);
+}
+export type GetProductByUserIdQueryHookResult = ReturnType<
+  typeof useGetProductByUserIdQuery
+>;
+export type GetProductByUserIdLazyQueryHookResult = ReturnType<
+  typeof useGetProductByUserIdLazyQuery
+>;
+export type GetProductByUserIdQueryResult = Apollo.QueryResult<
+  GetProductByUserIdQuery,
+  GetProductByUserIdQueryVariables
+>;
+export const GetUserInfoDocument = gql`
+  query getUserInfo($email: String!) {
+    getUserInfo(email: $email) {
+      id
+      created_at
+    }
+  }
+`;
 
 /**
  * __useGetUserInfoQuery__
@@ -574,60 +761,110 @@ export const GetUserInfoDocument = gql`
  *   },
  * });
  */
-export function useGetUserInfoQuery(baseOptions: Apollo.QueryHookOptions<GetUserInfoQuery, GetUserInfoQueryVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useQuery<GetUserInfoQuery, GetUserInfoQueryVariables>(GetUserInfoDocument, options);
-      }
-export function useGetUserInfoLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetUserInfoQuery, GetUserInfoQueryVariables>) {
-          const options = {...defaultOptions, ...baseOptions}
-          return Apollo.useLazyQuery<GetUserInfoQuery, GetUserInfoQueryVariables>(GetUserInfoDocument, options);
-        }
+export function useGetUserInfoQuery(
+  baseOptions: Apollo.QueryHookOptions<
+    GetUserInfoQuery,
+    GetUserInfoQueryVariables
+  >
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useQuery<GetUserInfoQuery, GetUserInfoQueryVariables>(
+    GetUserInfoDocument,
+    options
+  );
+}
+export function useGetUserInfoLazyQuery(
+  baseOptions?: Apollo.LazyQueryHookOptions<
+    GetUserInfoQuery,
+    GetUserInfoQueryVariables
+  >
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useLazyQuery<GetUserInfoQuery, GetUserInfoQueryVariables>(
+    GetUserInfoDocument,
+    options
+  );
+}
 export type GetUserInfoQueryHookResult = ReturnType<typeof useGetUserInfoQuery>;
-export type GetUserInfoLazyQueryHookResult = ReturnType<typeof useGetUserInfoLazyQuery>;
-export type GetUserInfoQueryResult = Apollo.QueryResult<GetUserInfoQuery, GetUserInfoQueryVariables>;
+export type GetUserInfoLazyQueryHookResult = ReturnType<
+  typeof useGetUserInfoLazyQuery
+>;
+export type GetUserInfoQueryResult = Apollo.QueryResult<
+  GetUserInfoQuery,
+  GetUserInfoQueryVariables
+>;
 export type AddProductMutationVariables = Exact<{
   input: AddProductPayload;
 }>;
 
-
-export type AddProductMutation = { __typename?: 'Mutation', addProduct: { __typename?: 'Product', id: string, product_name: string } };
+export type AddProductMutation = {
+  __typename?: 'Mutation';
+  addProduct: { __typename?: 'Product'; id: string; product_name: string };
+};
 
 export type DeleteProductMutationVariables = Exact<{
   user_id: Scalars['String'];
   id: Scalars['String'];
 }>;
 
-
-export type DeleteProductMutation = { __typename?: 'Mutation', deleteProduct: { __typename?: 'UpdateProductResponse', id: string } };
+export type DeleteProductMutation = {
+  __typename?: 'Mutation';
+  deleteProduct: { __typename?: 'UpdateProductResponse'; id: string };
+};
 
 export type ResetPasswordMutationVariables = Exact<{
   passwordInput: Scalars['String'];
   reset_password_secure_code: Scalars['String'];
 }>;
 
-
-export type ResetPasswordMutation = { __typename?: 'Mutation', resetPassword: { __typename?: 'ResetPasswordResponse', email: string, id: number } };
+export type ResetPasswordMutation = {
+  __typename?: 'Mutation';
+  resetPassword: {
+    __typename?: 'ResetPasswordResponse';
+    email: string;
+    id: number;
+  };
+};
 
 export type ResetPasswordRequestMutationVariables = Exact<{
   email: Scalars['String'];
 }>;
 
-
-export type ResetPasswordRequestMutation = { __typename?: 'Mutation', resetPasswordRequest: { __typename?: 'ResetPasswordRequestResponse', id: number } };
+export type ResetPasswordRequestMutation = {
+  __typename?: 'Mutation';
+  resetPasswordRequest: {
+    __typename?: 'ResetPasswordRequestResponse';
+    id: number;
+  };
+};
 
 export type SignInMutationVariables = Exact<{
   input: SignInPayload;
 }>;
 
-
-export type SignInMutation = { __typename?: 'Mutation', signIn: { __typename?: 'AuthResponse', email: string, token: string, id: number } };
+export type SignInMutation = {
+  __typename?: 'Mutation';
+  signIn: {
+    __typename?: 'AuthResponse';
+    email: string;
+    token: string;
+    id: number;
+  };
+};
 
 export type SignUpMutationVariables = Exact<{
   input: SignUpPayload;
 }>;
 
-
-export type SignUpMutation = { __typename?: 'Mutation', signUp: { __typename?: 'AuthResponse', email: string, token: string, id: number } };
+export type SignUpMutation = {
+  __typename?: 'Mutation';
+  signUp: {
+    __typename?: 'AuthResponse';
+    email: string;
+    token: string;
+    id: number;
+  };
+};
 
 export type UpdateDesiredPriceMutationVariables = Exact<{
   desired_price: Scalars['Float'];
@@ -635,34 +872,65 @@ export type UpdateDesiredPriceMutationVariables = Exact<{
   id: Scalars['String'];
 }>;
 
-
-export type UpdateDesiredPriceMutation = { __typename?: 'Mutation', updateDesiredPrice: { __typename?: 'UpdateProductResponse', id: string } };
+export type UpdateDesiredPriceMutation = {
+  __typename?: 'Mutation';
+  updateDesiredPrice: { __typename?: 'UpdateProductResponse'; id: string };
+};
 
 export type CheckProductPriceByUrlQueryVariables = Exact<{
   url: Scalars['String'];
 }>;
 
-
-export type CheckProductPriceByUrlQuery = { __typename?: 'Query', checkProductPriceByUrl: { __typename?: 'CheckProductPriceResponse', product_name: string, product_link: string, product_image_src: string, original_price: number } };
+export type CheckProductPriceByUrlQuery = {
+  __typename?: 'Query';
+  checkProductPriceByUrl: {
+    __typename?: 'CheckProductPriceResponse';
+    product_name: string;
+    product_link: string;
+    product_image_src: string;
+    original_price: number;
+  };
+};
 
 export type CheckSecureCodeQueryVariables = Exact<{
   reset_password_secure_code: Scalars['String'];
 }>;
 
-
-export type CheckSecureCodeQuery = { __typename?: 'Query', checkSecureCode: { __typename?: 'CheckSecureCodeResponse', isValidCode: boolean, email: string } };
+export type CheckSecureCodeQuery = {
+  __typename?: 'Query';
+  checkSecureCode: {
+    __typename?: 'CheckSecureCodeResponse';
+    isValidCode: boolean;
+    email: string;
+  };
+};
 
 export type GetProductByUserIdQueryVariables = Exact<{
   userId: Scalars['String'];
   status: Scalars['String'];
 }>;
 
-
-export type GetProductByUserIdQuery = { __typename?: 'Query', getProductByUserId: Array<{ __typename?: 'Product', id: string, product_name: string, product_link: string, product_image_src: string, original_price: number, current_price: number, desired_price: number, status: ProductStatus, user_id: string }> };
+export type GetProductByUserIdQuery = {
+  __typename?: 'Query';
+  getProductByUserId: Array<{
+    __typename?: 'Product';
+    id: string;
+    product_name: string;
+    product_link: string;
+    product_image_src: string;
+    original_price: number;
+    current_price: number;
+    desired_price: number;
+    status: ProductStatus;
+    user_id: string;
+  }>;
+};
 
 export type GetUserInfoQueryVariables = Exact<{
   email: Scalars['String'];
 }>;
 
-
-export type GetUserInfoQuery = { __typename?: 'Query', getUserInfo: { __typename?: 'User_info', id: string, created_at: any } };
+export type GetUserInfoQuery = {
+  __typename?: 'Query';
+  getUserInfo: { __typename?: 'User_info'; id: string; created_at: any };
+};
