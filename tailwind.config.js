@@ -29,6 +29,12 @@ module.exports = {
         red: {
           DEFAULT: '#bf1650',
         },
+        blue: {
+          DEFAULT: '#63B4B8',
+        },
+        middlegrey: {
+          DEFAULT: '#9D9D9D',
+        },
       },
     },
   },
