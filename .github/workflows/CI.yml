@@ -34,9 +34,9 @@ jobs:
       - name: run graphql code generator
         run: npm run generate
         
-      - name: build bundle
+      - name: Test 🚨
+        run: npm test
+
+      - name: Build 🏗️
         run: npm run build
-        
-      - name: run test
-        run: npm run test
         
