@@ -1,14 +1,21 @@
 # Trackky - Price Drop Alert App
 
-### Link:
+### **Link**:
 
 https://trackky-frontend.vercel.app/
 
-### Status Badge:
+### **Status Badge**:
 
 [![CD](https://github.com/Jocelyn59435/Trackky_frontend/actions/workflows/CD.yml/badge.svg)](https://github.com/Jocelyn59435/Trackky_frontend/actions/workflows/CD.yml)
 
-### Project Overview:
+### **Project Overview**:
+
+Tech Stacks: 
+- Next.js
+- tailwindcss
+- Apollo Client
+- Graphql Code Generator
+- Jest
 
 This project has 6 pages:
 
