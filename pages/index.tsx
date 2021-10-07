@@ -5,8 +5,8 @@ function Home() {
   return (
     <>
       <Header notSignedIn={true} />
-      <div className='m-auto w-5/6 justify-around flex lg:flex-row md:flex-row sm:flex-col'>
-        <div className='space-y-2 p-20'>
+      <div className='m-auto w-5/6 justify-around flex flex-col sm:w-11/12 sm:flex-row'>
+        <div className='mt-10 space-y-2 lg:p-20 md:p-18  lg:w-1/2 sm:w-full'>
           <p className='text-blue text-4xl font-semibold font-mono tracking-wider'>
             Enter the Product Link
           </p>
@@ -24,7 +24,7 @@ function Home() {
           </p>
           <p>Chemist Warehouse</p>
         </div>
-        <div className='m-auto'>
+        <div className='m-auto p-3.5'>
           <Image src='/analyticsIcon.svg' width={350} height={350} />
         </div>
       </div>
