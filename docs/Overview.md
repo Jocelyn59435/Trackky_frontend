@@ -16,7 +16,7 @@
 ### Query:
 
 **Check Product Price By URL**
-- [Operation](./graphql/query/checkProductPriceByUrl.graphql): 
+- [Operation](../graphql/query/checkProductPriceByUrl.graphql): 
 ```
 query checkProductPriceByUrl($url: String!) {
   checkProductPriceByUrl(url: $url) {
@@ -41,7 +41,7 @@ const [
 ```
 
 **Check Secure Code**
-- [Operation](./graphql/query/checkSecureCode.graphql): 
+- [Operation](../graphql/query/checkSecureCode.graphql): 
 ```
 query checkSecureCode($reset_password_secure_code: String!) {
   checkSecureCode(reset_password_secure_code: $reset_password_secure_code) {
@@ -65,7 +65,7 @@ const {
 ```
 
 **Get Product By User ID**
-- [Operation](./graphql/query/getProductByUserId.graphql): 
+- [Operation](../graphql/query/getProductByUserId.graphql): 
 ```
 query getProductByUserId($userId: String!, $status: String!) {
   getProductByUserId(userId: $userId, status: $status) {
@@ -92,7 +92,7 @@ const [getProductByUserId, { data, loading, error }] =
 ```
 
 **Get User Info**
-- [Operation](./graphql/query/getUserInfo.graphql): 
+- [Operation](../graphql/query/getUserInfo.graphql): 
 ```
 query getUserInfo($email: String!) {
   getUserInfo(email: $email) {
@@ -108,7 +108,7 @@ query getUserInfo($email: String!) {
 ### Mutation:
 
 **Add Product**
-- [Operation](./graphql/mutation/addProduct.graphql): 
+- [Operation](../graphql/mutation/addProduct.graphql): 
 ```
 mutation addProduct($input: AddProductPayload!) {
   addProduct(input: $input) {
@@ -124,7 +124,7 @@ const [addProductMutation, { data, loading, error }] =
 ```
 
 **Delete Product**
-- [Operation](./graphql/mutation/deleteProduct.graphql): 
+- [Operation](../graphql/mutation/deleteProduct.graphql): 
 ```
 mutation deleteProduct($user_id: String!, $id: String!) {
   deleteProduct(user_id: $user_id, id: $id) {
@@ -142,7 +142,7 @@ const [
 ```
 
 **Reset Password**
-- [Operation](./graphql/mutation/resetPassword.graphql): 
+- [Operation](../graphql/mutation/resetPassword.graphql): 
 ```
 mutation resetPassword(
   $passwordInput: String!
@@ -167,7 +167,7 @@ const [
 ```
 
 **Reset Password Request**
-- [Operation](./graphql/mutation/resetPasswordRequest.graphql): 
+- [Operation](../graphql/mutation/resetPasswordRequest.graphql): 
 ```
 mutation resetPasswordRequest($email: String!) {
   resetPasswordRequest(email: $email) {
@@ -183,7 +183,7 @@ const [resetPasswordRequestMutation, { data, loading, error }] =
 ```
 
 **Sign In**
-- [Operation](./graphql/mutation/signIn.graphql): 
+- [Operation](../graphql/mutation/signIn.graphql): 
 ```
 mutation signIn($input: SignInPayload!) {
   signIn(input: $input) {
@@ -200,7 +200,7 @@ mutation signIn($input: SignInPayload!) {
 ```
 
 **Sign Up**
-- [Operation](./graphql/mutation/signUp.graphql): 
+- [Operation](../graphql/mutation/signUp.graphql): 
 ```
 mutation signUp($input: SignUpPayload!) {
   signUp(input: $input) {
@@ -217,7 +217,7 @@ mutation signUp($input: SignUpPayload!) {
 ```
 
 **Update Desired Price**
-- [Operation](./graphql/mutation/updateDesiredPrice.graphql): 
+- [Operation](../graphql/mutation/updateDesiredPrice.graphql): 
 ```
 mutation updateDesiredPrice(
   $desired_price: Float!
