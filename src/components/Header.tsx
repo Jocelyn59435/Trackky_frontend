@@ -1,4 +1,5 @@
 /* eslint-disable @next/next/link-passhref */
+/* eslint-disable @next/next/no-html-link-for-pages */
 import Link from 'next/link';
 import { motion } from 'framer-motion';
 import Image from 'next/image';
@@ -15,7 +16,7 @@ export default function Header(props: HeaderProps) {
     <>
       <div className='bg-indigo py-3 flex justify-between items-center'>
         <div className='p-2 cursor-pointer'>
-          <Link href='/'>
+          <a href='/' className='cursor-pointer'>
             <Image
               alt='trackky_logo'
               layout='fixed'
@@ -23,7 +24,7 @@ export default function Header(props: HeaderProps) {
               width={180}
               height={50}
             />
-          </Link>
+          </a>
         </div>
         {props.notSignedIn && (
           <Link href='/signin'>
