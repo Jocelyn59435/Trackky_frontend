@@ -98,10 +98,10 @@ Array [
     </div>
   </div>,
   <div
-    className="m-auto w-5/6 justify-around flex lg:flex-row md:flex-row sm:flex-col"
+    className="m-auto w-5/6 justify-around flex flex-col sm:w-11/12 sm:flex-row"
   >
     <div
-      className="space-y-2 p-20"
+      className="mt-10 space-y-2 lg:p-20 md:p-18  lg:w-1/2 sm:w-full"
     >
       <p
         className="text-blue text-4xl font-semibold font-mono tracking-wider"
@@ -133,7 +133,7 @@ Array [
       </p>
     </div>
     <div
-      className="m-auto"
+      className="m-auto p-3.5"
     >
       <div
         style={
