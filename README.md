@@ -1,9 +1,19 @@
 # Trackky - Price Drop Alert App
 
+### Link:
+
+https://trackky-frontend.vercel.app/
+
+### Status Badge:
+
+[![CD](https://github.com/Jocelyn59435/Trackky_frontend/actions/workflows/CD.yml/badge.svg)](https://github.com/Jocelyn59435/Trackky_frontend/actions/workflows/CD.yml)
+
 ### Quick Demo:
 
+When getting to user landing page, a `JWT token` will be set in the cookie, and it will be set to `null` when `Log Out` is clicked.
+
 - Sign Up
-  When getting to user landing page, a `JWT token` will be set in the cookie, and it will be set to `null` when `Log Out` is clicked.
+
   ![signup](/demoGIF/signup.gif)
 
 - Sign In & Sign Out
@@ -21,3 +31,5 @@
 - Responsive Display
 
   ![reset_password](/demoGIF/responsive.gif)
+
+For more details, please refer to [docs](./docs) folder.
