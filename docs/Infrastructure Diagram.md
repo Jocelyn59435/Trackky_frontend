@@ -1,1 +1,1 @@
-![infradiagram](../diagrams/infrastructureDiagram.png)
+![infradiagram](../diagrams/InfrastructureDiagram.png)
