@@ -10,8 +10,7 @@ https://trackky-frontend.vercel.app/
 
 ### Quick Demo:
 
-> When getting to user landing page, a `JWT token` will be set in the cookie, and it will be set to `null` when `Log Out` is clicked.
-> Form input is checked on the fly.
+When getting to user landing page, a `JWT token` will be set in the cookie, and it will be set to `null` when `Log Out` is clicked.\\**Form input** is checked on the fly.
 
 - Sign Up
 
