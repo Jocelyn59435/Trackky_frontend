@@ -12,12 +12,12 @@ https://trackky-frontend.vercel.app/
 
 This project has 6 pages:
 
-- **Home Page:** A brief introduction of Trackky.\
-- **Sign Up Page:** Has a sign up form, when new users enter input and click `submit` button, then get to landing page.\
-- **Sign In Page:** Has a sign in form, when current users enter input and click `submit` button, then get to landing page.\
-- **Reset Passowrd Request Page:** Has a reset password request form, when current users enter email address and click `submit` button, they will receive a email with reset password link, the link will expire in 2 hours.\
-- **Reset Password Page:** Reset password form will be shown if the secure code is valid, current users enter input and click `submit` button, the password will be reset.\
-- **Landing Page**: Has a search form and a track list. When current users enter product link, product details including product name, product price, product image will be shown, it will be added to track list if `Add to track list` button is clicked. \The track list shows product alert details in including product name, original price, current price and desired price. Current users can modify desired price with the `update` button, and delete product alert with the `X` button.
+- **Home Page:** A brief introduction of Trackky.
+- **Sign Up Page:** Has a sign up form, when new users enter input and click `submit` button, then get to landing page.
+- **Sign In Page:** Has a sign in form, when current users enter input and click `submit` button, then get to landing page.
+- **Reset Passowrd Request Page:** Has a reset password request form, when current users enter email address and click `submit` button, they will receive a email with reset password link, the link will expire in 2 hours.
+- **Reset Password Page:** Reset password form will be shown if the secure code is valid, current users enter input and click `submit` button, the password will be reset.
+- **Landing Page**: Has a search form and a track list. When current users enter product link, product details including product name, product price, product image will be shown, it will be added to track list if `Add to track list` button is clicked. The track list shows product alert details in including product name, original price, current price and desired price. Current users can modify desired price with the `update` button, and delete product alert with the `X` button.
 
 ### Quick Demo:
 
