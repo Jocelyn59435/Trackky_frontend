@@ -33,6 +33,9 @@ jobs:
 
       - name: run graphql code generator
         run: npm run generate
+
+      - name: run lint
+        run: npm run lint
         
       - name: Test 🚨
         run: npm test

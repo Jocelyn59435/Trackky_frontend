@@ -78,6 +78,7 @@ export function ProductInfo(props: ProductInfoProps) {
         {...{ contentStyle }}
         trigger={
           <Image
+            alt='product_image'
             src={'/deleteIcon.svg'}
             width={15}
             height={15}
@@ -110,7 +111,12 @@ export function ProductInfo(props: ProductInfoProps) {
 
       <div className='w-1/2 m-auto'>
         <a className='cursor-pointer' href={props.product_link}>
-          <Image width={200} height={200} src={props.product_image_src} />
+          <Image
+            width={200}
+            height={200}
+            src={props.product_image_src}
+            alt='product_image'
+          />
         </a>
       </div>
       <div className='grid grid-cols-2 '>

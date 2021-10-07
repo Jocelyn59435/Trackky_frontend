@@ -50,6 +50,7 @@ export default function SignUp() {
         throw new Error('Cannot sign up' + result.errors);
       }
       if (result.data) {
+        // eslint-disable-next-line react-hooks/rules-of-hooks
         const { setToken } = useAuth();
         setToken(result.data.signUp.token);
         router.push(`/users/${result.data.signUp.id}/landingpage`);

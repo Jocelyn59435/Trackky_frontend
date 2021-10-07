@@ -27,6 +27,7 @@ export function FilterSection(props: FileterSectionProps) {
         status: activeClicked ? 'active' : 'achieved',
       },
     });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [activeClicked, state]);
   console.log('State in fileter section' + state);
   const unclickedStyle =

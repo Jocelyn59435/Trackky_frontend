@@ -25,7 +25,12 @@ function Home() {
           <p>Chemist Warehouse</p>
         </div>
         <div className='m-auto p-3.5'>
-          <Image src='/analyticsIcon.svg' width={350} height={350} />
+          <Image
+            src='/analyticsIcon.svg'
+            alt='intro image'
+            width={350}
+            height={350}
+          />
         </div>
       </div>
     </>
