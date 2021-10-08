@@ -329,7 +329,7 @@ There are 6 [snapshot tests](./__tests__) for each page.
 - Generate TypeScript typings from Graphql schema--`npm run generate`
 - Check code--`npm run lint`
 - Run tests--`npm run test`
-- Build the app--`npm run build`\
+- Build the app--`npm run build`
 
 
 [CD](../.github/workflows/CD.yml):
