@@ -293,7 +293,7 @@ const state = useReactiveVar(toggleProductStatus);
 ## **Authorization**
 Authorization is accomplished via `JWT token` and `Nookie`:\
 [useAuth.tsx](/lib/useAuth.tsx) has token validation, and returns token, setToken() and destroyToken() funtions which can be utilized in other components or pages.\
-Moreover, `producted routes` also relies on `useAuth()`, for example, [user landing page](https://github.com/Jocelyn59435/Trackky_frontend/blob/f7d2b01212af6a30b71b614fd776a9e2562fa9c6/pages/users/%5Buserid%5D/landingpage.tsx#L12):
+Moreover, `protected routes` also relies on `useAuth()`, for example, [user landing page](https://github.com/Jocelyn59435/Trackky_frontend/blob/f7d2b01212af6a30b71b614fd776a9e2562fa9c6/pages/users/%5Buserid%5D/landingpage.tsx#L12):
 
 ```
   const router = useRouter();

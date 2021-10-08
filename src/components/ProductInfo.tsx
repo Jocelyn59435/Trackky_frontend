@@ -120,7 +120,7 @@ export function ProductInfo(props: ProductInfoProps) {
         </a>
       </div>
       <div className='grid grid-cols-2 '>
-        <div className='h-20 col-span-2 text-lg text-center'>
+        <div className='h-35 col-span-2 text-lg text-center'>
           {props.product_name}
         </div>
         <div className='font-bold'>Original Price:</div>

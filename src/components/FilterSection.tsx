@@ -51,7 +51,7 @@ export function FilterSection(props: FileterSectionProps) {
           Achieved
         </div>
       </div>
-      <div className='mt-20 grid gap-20 lg:grid-cols-3 md:grid-cols-3 sm:grid-cols-2'>
+      <div className='mt-20 grid gap-20 lg:grid-cols-3 md:grid-cols-2 sm:grid-cols-1'>
         {data &&
           data?.getProductByUserId.map((p) => (
             <ProductInfo

@@ -49,6 +49,7 @@ When getting to user landing page, a `JWT token` will be set in the cookie, and 
 
 - Responsive Display
 
-  ![reset_password](/demoGIF/responsive.gif)
+  ![responsive1](/demoGIF/responsive.gif)
+  ![responsive2](/demoGIF/responsive2.gif)
 
 For more details, please refer to [docs](./docs) folder.
