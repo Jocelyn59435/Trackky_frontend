@@ -29,7 +29,6 @@ export function FilterSection(props: FileterSectionProps) {
     });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [activeClicked, state]);
-  console.log('State in fileter section' + state);
   const unclickedStyle =
     'w-1/4 text-center border-0 border-indigo text-indigo font-bold text-lg hover:bg-indigo hover:text-grey';
   const clickedStyle =
