@@ -23,7 +23,12 @@ export function useAuth(): UseAuthReturnType {
   }
   return {
     token: userToken || null,
-    setToken: (token) => setCookie(null, 'token', token),
+    setToken: (token) =>
+      setCookie(null, 'token', token, {
+        // 24 hours
+        maxAge: 24 * 60 * 60,
+        path: '/',
+      }),
     destroyToken: () => destroyCookie(null, 'token'),
   };
 }

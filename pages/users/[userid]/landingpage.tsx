@@ -10,7 +10,7 @@ import jwtDecode from 'jwt-decode';
 export default function LandingPage() {
   const router = useRouter();
   const { userid } = router.query;
-  const { token, setToken } = useAuth();
+  const { token, destroyToken } = useAuth();
 
   let sameRoute = false;
   if (token) {
@@ -25,7 +25,7 @@ export default function LandingPage() {
       }
       sameRoute = true;
     } catch (e) {
-      setToken(null);
+      destroyToken();
       console.log(e.message);
     }
   }
